@@ -116,13 +116,13 @@ export default function SelectedWork() {
       });
     }, sectionRef);
 
-    // Force a refresh after 1 second to recalculate pin-spacer height after fonts load
-    const refreshTimer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 1000);
+    const handleResize = () => ScrollTrigger.refresh();
+    window.addEventListener("resize", handleResize);
+    const timer = setTimeout(() => ScrollTrigger.refresh(), 500);
 
     return () => {
-      clearTimeout(refreshTimer);
+      clearTimeout(timer);
+      window.removeEventListener("resize", handleResize);
       ctx.revert();
     };
   }, []);
