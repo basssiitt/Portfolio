@@ -65,15 +65,15 @@ function TiltCard({
           ? "transform 0.1s ease-out"
           : "transform 0.4s ease-out",
       }}
-      className={`relative overflow-hidden rounded-2xl bg-[#0A0E1A]/80 backdrop-blur-xl border transition-all duration-300 ${
+      className={`relative overflow-hidden rounded-2xl bg-[#05060A]/40 backdrop-blur-xl border transition-all duration-300 ${
         isActive
-          ? "border-white/25 shadow-[0_0_30px_rgba(0,229,255,0.12)]"
-          : "border-white/10 hover:border-white/20"
+          ? "border-white/40 shadow-[0_0_30px_rgba(0,229,255,0.14)] ring-1 ring-white/10"
+          : "border-white/20 hover:border-white/35"
       } ${className}`}
     >
       {/* Subtle top-edge light highlight */}
       <div
-        className="pointer-events-none absolute -top-px left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+        className="pointer-events-none absolute -top-px left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"
         aria-hidden="true"
       />
 
@@ -118,7 +118,7 @@ export default function SelectedWork() {
         scrollTrigger: {
           trigger: section,
           pin: true,
-          scrub: 1,
+          scrub: true,
           start: "top top",
           end: () => `+=${getScrollDistance()}`,
           invalidateOnRefresh: true,
@@ -143,17 +143,18 @@ export default function SelectedWork() {
   }, [reducedMotion]);
 
   const cardContainerClass =
-    "w-[85vw] md:w-[55vw] lg:w-[45vw] xl:w-[42vw] max-w-[620px] max-h-[75vh] shrink-0 p-6 md:p-8 flex flex-col justify-between overflow-hidden";
+    "w-[85vw] md:w-[55vw] lg:w-[45vw] xl:w-[42vw] max-w-[620px] h-[520px] max-h-[68vh] shrink-0 p-6 md:p-8 flex flex-col justify-between overflow-hidden";
 
   return (
     <section
       ref={sectionRef}
       id="work"
       aria-label="Selected Projects and Case Studies"
-      className="relative min-h-screen py-16 md:py-20 overflow-hidden flex flex-col justify-center"
+      className="relative h-auto md:h-screen w-full flex flex-col justify-center overflow-hidden py-16 md:py-0"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mb-6 md:mb-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      {/* Header bar cleanly integrated into pinned container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mb-4 md:mb-6 shrink-0">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-3">
           <SectionHeading
             eyebrow="03 // PROVEN RESULTS & ARCHITECTURE"
             title="Selected Work & Deep Dives"
@@ -164,7 +165,7 @@ export default function SelectedWork() {
             <span className="text-xs font-mono text-[var(--text-muted)]">
               Card {activeCardIndex + 1} of 9
             </span>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-[var(--cyan)]">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-[var(--cyan)]">
               <span>Scroll horizontally</span>
               <span aria-hidden="true">→</span>
             </div>
@@ -173,7 +174,7 @@ export default function SelectedWork() {
       </div>
 
       {/* Horizontal Scroll Track (Desktop) / Vertical Stack (Mobile) */}
-      <div className="w-full px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8 flex items-center">
         <div
           ref={trackRef}
           className="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch w-full md:w-max will-change-transform"
@@ -185,7 +186,7 @@ export default function SelectedWork() {
             isActive={activeCardIndex === 0}
             className={cardContainerClass}
           >
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[var(--cyan)]/10 border border-[var(--cyan)]/30 text-[var(--cyan)] font-mono text-[11px] uppercase tracking-wider font-semibold">
@@ -259,11 +260,11 @@ export default function SelectedWork() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 pt-4 mt-4 border-t border-white/10">
+            <div className="flex flex-wrap items-center gap-3 pt-3.5 mt-3 border-t border-white/10">
               <MagneticButton
                 href="/work/claslo"
                 variant="primary"
-                className="!text-xs !px-5 !py-2.5"
+                className="!text-xs !px-5 !py-2"
                 ariaLabel="Read detailed Claslo case study"
               >
                 Read Case Study →
@@ -272,7 +273,7 @@ export default function SelectedWork() {
                 href="https://claslo.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-xs text-[var(--text-muted)] hover:text-[var(--cyan)] transition-colors px-3 py-2 rounded-lg"
+                className="inline-flex items-center gap-1 text-xs text-[var(--text-muted)] hover:text-[var(--cyan)] transition-colors px-3 py-1.5 rounded-lg"
               >
                 <span>Visit claslo.com</span>
                 <span aria-hidden="true">↗</span>
@@ -287,7 +288,7 @@ export default function SelectedWork() {
             isActive={activeCardIndex === 1}
             className={cardContainerClass}
           >
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--violet)] font-semibold">
                   {"//"} 02. ARCHITECTURE • MULTI-TENANCY
@@ -326,7 +327,7 @@ export default function SelectedWork() {
               </div>
 
               {/* Compact Middleware Inspector Visual */}
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3 font-mono text-[11px] space-y-1.5">
+              <div className="rounded-xl border border-white/10 bg-black/40 p-3 font-mono text-[11px] space-y-1">
                 <div className="flex justify-between text-[var(--text-muted)] pb-1 border-b border-white/5">
                   <span className="text-[var(--violet)]">TENANT MIDDLEWARE INSPECTOR</span>
                   <span className="text-emerald-400">200 OK</span>
@@ -340,7 +341,7 @@ export default function SelectedWork() {
               </div>
             </div>
 
-            <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between">
+            <div className="pt-3.5 mt-3 border-t border-white/10 flex items-center justify-between">
               <span className="text-xs text-[var(--text-muted)] font-mono">
                 100% strict cross-tenant data safety
               </span>
@@ -362,7 +363,7 @@ export default function SelectedWork() {
             isActive={activeCardIndex === 2}
             className={cardContainerClass}
           >
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--amber)] font-semibold">
                   {"//"} 03. FINTECH ENGINE • BILLING
@@ -401,17 +402,17 @@ export default function SelectedWork() {
               </div>
 
               {/* Compact Invoice Ledger Component */}
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-2">
+              <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-1.5">
                 <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] pb-1 border-b border-white/5">
                   <span>BILLING LEDGER RUN</span>
                   <span className="text-emerald-400">100% DISPATCHED</span>
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-[11px]">
-                  <div className="p-2 rounded bg-white/[0.02] border border-white/5">
+                  <div className="p-1.5 rounded bg-white/[0.02] border border-white/5">
                     <span className="text-[10px] text-[var(--text-muted)] block">Vouchers Created</span>
                     <span className="text-sm font-bold text-white font-mono">4,820 Monthly</span>
                   </div>
-                  <div className="p-2 rounded bg-white/[0.02] border border-white/5">
+                  <div className="p-1.5 rounded bg-white/[0.02] border border-white/5">
                     <span className="text-[10px] text-[var(--text-muted)] block">WhatsApp Delivery</span>
                     <span className="text-sm font-bold text-emerald-400 font-mono">99.4% Verified</span>
                   </div>
@@ -419,7 +420,7 @@ export default function SelectedWork() {
               </div>
             </div>
 
-            <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between">
+            <div className="pt-3.5 mt-3 border-t border-white/10 flex items-center justify-between">
               <span className="text-xs text-[var(--text-muted)] font-mono">
                 Eliminates manual paper vouchers
               </span>
@@ -441,7 +442,7 @@ export default function SelectedWork() {
             isActive={activeCardIndex === 3}
             className={cardContainerClass}
           >
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--cyan)] font-semibold">
                   {"//"} 04. HIGH CONCURRENCY • WEBSOCKETS
@@ -480,7 +481,7 @@ export default function SelectedWork() {
               </div>
 
               {/* Compact Sync Telemetry */}
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-1.5 font-mono text-[11px]">
+              <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-1 font-mono text-[11px]">
                 <div className="flex items-center justify-between pb-1 border-b border-white/5">
                   <span className="text-white/60">PEAK SPIKE BUFFER</span>
                   <span className="text-emerald-400">0 PACKETS LOST</span>
@@ -493,7 +494,7 @@ export default function SelectedWork() {
               </div>
             </div>
 
-            <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between">
+            <div className="pt-3.5 mt-3 border-t border-white/10 flex items-center justify-between">
               <span className="text-xs text-[var(--text-muted)] font-mono">
                 Offline tolerant with auto-retry
               </span>
@@ -515,7 +516,7 @@ export default function SelectedWork() {
             isActive={activeCardIndex === 4}
             className={cardContainerClass}
           >
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--violet)] font-semibold">
                   {"//"} 05. APPLIED AI &amp; AGENTS • SAAS MVP
@@ -555,7 +556,7 @@ export default function SelectedWork() {
               </div>
 
               {/* Compact Agent Reasoning Trace */}
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3 font-mono text-[11px] space-y-1.5">
+              <div className="rounded-xl border border-white/10 bg-black/40 p-3 font-mono text-[11px] space-y-1">
                 <div className="flex justify-between text-[var(--text-muted)] pb-1 border-b border-white/5">
                   <span className="text-[var(--violet)]">AGENT REASONING TRACE</span>
                   <span>accuracy: 99.2%</span>
@@ -568,7 +569,7 @@ export default function SelectedWork() {
               </div>
             </div>
 
-            <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between">
+            <div className="pt-3.5 mt-3 border-t border-white/10 flex items-center justify-between">
               <span className="text-xs text-[var(--text-muted)] font-mono">
                 Deployable for custom enterprise suites
               </span>
@@ -590,7 +591,7 @@ export default function SelectedWork() {
             isActive={activeCardIndex === 5}
             className={cardContainerClass}
           >
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--amber)] font-semibold">
                   {"//"} 06. FINTECH PLATFORM • ARCHITECTURAL MVP
@@ -630,7 +631,7 @@ export default function SelectedWork() {
               </div>
 
               {/* Compact Ledger Audit Log */}
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-1.5 font-mono text-[11px]">
+              <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-1 font-mono text-[11px]">
                 <div className="flex justify-between text-[var(--text-muted)] pb-1 border-b border-white/5">
                   <span className="text-[var(--amber)]">IMMUTABLE LEDGER RECORD</span>
                   <span className="text-emerald-400">ZERO-SUM OK</span>
@@ -643,7 +644,7 @@ export default function SelectedWork() {
               </div>
             </div>
 
-            <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between">
+            <div className="pt-3.5 mt-3 border-t border-white/10 flex items-center justify-between">
               <span className="text-xs text-[var(--text-muted)] font-mono">
                 Idempotent &amp; ACID compliant
               </span>
@@ -665,7 +666,7 @@ export default function SelectedWork() {
             isActive={activeCardIndex === 6}
             className={cardContainerClass}
           >
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--cyan)] font-semibold">
                   {"//"} 07. CI/CD TOOLING • QUALITY
@@ -727,7 +728,7 @@ export default function SelectedWork() {
               </div>
             </div>
 
-            <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between">
+            <div className="pt-3.5 mt-3 border-t border-white/10 flex items-center justify-between">
               <span className="text-xs text-[var(--text-muted)] font-mono">
                 Zero performance regressions allowed
               </span>
@@ -749,7 +750,7 @@ export default function SelectedWork() {
             isActive={activeCardIndex === 7}
             className={cardContainerClass}
           >
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--violet)] font-semibold">
                   {"//"} 08. CLOUD SYSTEMS • EDGE
@@ -789,7 +790,7 @@ export default function SelectedWork() {
               </div>
 
               {/* Compact Global Edge Latency Map */}
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-1.5 font-mono text-[11px]">
+              <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-1 font-mono text-[11px]">
                 <div className="flex justify-between text-[var(--text-muted)] pb-1 border-b border-white/5">
                   <span className="text-[var(--violet)]">GLOBAL POP LATENCY</span>
                   <span className="text-emerald-400">85% DB OFFLOAD</span>
@@ -811,7 +812,7 @@ export default function SelectedWork() {
               </div>
             </div>
 
-            <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between">
+            <div className="pt-3.5 mt-3 border-t border-white/10 flex items-center justify-between">
               <span className="text-xs text-[var(--text-muted)] font-mono">
                 Scalable to 10M+ daily hits
               </span>
@@ -833,7 +834,7 @@ export default function SelectedWork() {
             isActive={activeCardIndex === 8}
             className={cardContainerClass}
           >
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--cyan)] font-semibold">
                   {"//"} 09. NEXT VENTURE • PARTNERSHIP
@@ -855,7 +856,7 @@ export default function SelectedWork() {
                 to 4 weeks.
               </p>
 
-              <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1.5 font-mono text-[11px]">
+              <div className="p-3 rounded-xl bg-black/40 border border-white/10 space-y-1.5 font-mono text-[11px]">
                 <div className="flex justify-between text-[var(--text-muted)]">
                   <span>Turnaround Velocity</span>
                   <span className="text-[var(--cyan)]">2 - 4 Weeks</span>
@@ -878,12 +879,12 @@ export default function SelectedWork() {
               </div>
             </div>
 
-            <div className="pt-4 mt-4 border-t border-white/10 space-y-2.5">
+            <div className="pt-3.5 mt-3 border-t border-white/10 space-y-2">
               <div className="flex flex-col sm:flex-row gap-2.5">
                 <MagneticButton
                   href="#contact"
                   variant="primary"
-                  className="w-full sm:w-auto justify-center !text-xs !px-5 !py-2.5"
+                  className="w-full sm:w-auto justify-center !text-xs !px-5 !py-2"
                   ariaLabel="Start a project conversation"
                 >
                   Start Conversation →
@@ -891,7 +892,7 @@ export default function SelectedWork() {
                 <MagneticButton
                   href="/cv"
                   variant="secondary"
-                  className="w-full sm:w-auto justify-center !text-xs !px-5 !py-2.5"
+                  className="w-full sm:w-auto justify-center !text-xs !px-5 !py-2"
                   ariaLabel="View CV and background"
                 >
                   View Résumé / CV
