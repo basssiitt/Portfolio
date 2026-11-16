@@ -95,7 +95,9 @@ export default function SelectedWork() {
       const track = trackRef.current;
       if (!track || !sectionRef.current) return;
 
-      // Calculate the exact distance to scroll horizontally
+      // Normalize scroll prevents Lenis from fighting GSAP's pin
+      ScrollTrigger.normalizeScroll(true);
+
       const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
 
       const tween = gsap.to(track, {
@@ -106,10 +108,10 @@ export default function SelectedWork() {
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top top",
-        end: () => `+=${track.scrollWidth - window.innerWidth}`,
+        end: () => `+=${track.scrollWidth}`, // Using scrollWidth guarantees enough space
         pin: true,
         animation: tween,
-        scrub: 1,
+        scrub: true, // INSTANT scroll, no lag
         invalidateOnRefresh: true,
         anticipatePin: 1,
         onUpdate: (self) => {
@@ -131,6 +133,7 @@ export default function SelectedWork() {
     return () => {
       clearTimeout(timer);
       ctx.revert();
+      ScrollTrigger.normalizeScroll(false);
     };
   }, [reducedMotion]);
 
