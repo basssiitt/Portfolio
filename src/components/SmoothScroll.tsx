@@ -21,12 +21,15 @@ export default function SmoothScroll({
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const lenis = new Lenis();
+    const lenis = new Lenis({
+      wrapper: window,
+      content: document.documentElement,
+      smoothWheel: true,
+      syncTouch: false,
+    });
 
-    // Synchronize Lenis scroll with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
 
-    // Drive Lenis RAF updates through GSAP's high-performance ticker
     const updateTicker = (time: number) => {
       lenis.raf(time * 1000);
     };

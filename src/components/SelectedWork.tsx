@@ -89,21 +89,20 @@ export default function SelectedWork() {
       const track = trackRef.current;
       if (!track || !sectionRef.current) return;
 
-      // This is the exact pixel distance the cards need to move
-      const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
+      const scrollDistance = track.scrollWidth - window.innerWidth;
 
       const tween = gsap.to(track, {
-        x: getScrollAmount,
+        x: -scrollDistance,
         ease: "none",
       });
 
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top top",
-        end: () => `+=${getScrollAmount() * -1}`, // End EXACTLY when cards stop moving
+        end: () => `+=${scrollDistance}`,
         pin: true,
         animation: tween,
-        scrub: 1, // A tiny bit of smoothing feels premium
+        scrub: 1,
         invalidateOnRefresh: true,
         anticipatePin: 1,
         onUpdate: (self) => {
@@ -117,26 +116,22 @@ export default function SelectedWork() {
       });
     }, sectionRef);
 
-    // Force refresh after layout is painted and fonts load
-    const timer = setTimeout(() => {
+    // Force a refresh after 1 second to recalculate pin-spacer height after fonts load
+    const refreshTimer = setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 500);
+    }, 1000);
 
     return () => {
-      clearTimeout(timer);
+      clearTimeout(refreshTimer);
       ctx.revert();
     };
   }, []);
 
   const cardContainerClass =
-    "w-full md:w-[55vw] lg:w-[45vw] xl:w-[42vw] md:max-w-[620px] h-auto min-h-[480px] md:h-[520px] md:max-h-[68vh] md:shrink-0 p-5 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden bg-transparent";
+    "w-[85vw] sm:w-[480px] md:w-[560px] lg:w-[600px] h-[520px] max-h-[75vh] shrink-0 p-6 md:p-8 flex flex-col justify-between overflow-hidden bg-transparent";
 
   return (
-    <section
-      id="work"
-      aria-label="Selected Projects and Case Studies"
-      className="relative"
-    >
+    <div id="work" className="relative">
       {/* Header bar that scrolls naturally before the pin */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-20 pb-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-3">
@@ -158,14 +153,14 @@ export default function SelectedWork() {
         </div>
       </div>
 
-      {/* Pinned horizontal section: Exactly 100vh with no top/bottom padding */}
-      <div
+      {/* Pinned horizontal section */}
+      <section
         ref={sectionRef}
-        className="h-auto md:h-screen w-full flex items-center overflow-hidden"
+        className="relative h-screen w-full flex items-center overflow-hidden bg-[#05060A]"
       >
         <div
           ref={trackRef}
-          className="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch w-full md:w-max px-4 sm:px-6 lg:px-8 will-change-transform"
+          className="flex gap-6 pl-6 md:pl-24 w-max"
         >
           {/* =========================================================================
               CARD 1: CLASLO CORE OS (FLAGSHIP)
@@ -890,7 +885,7 @@ export default function SelectedWork() {
             </div>
           </TiltCard>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
