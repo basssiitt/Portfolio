@@ -82,65 +82,55 @@ export default function SelectedWork() {
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
-    if (typeof window === "undefined" || reducedMotion) return;
+    if (
+      typeof window === "undefined" ||
+      window.innerWidth < 768 ||
+      reducedMotion
+    )
+      return;
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 768px)", () => {
+    const ctx = gsap.context(() => {
       const track = trackRef.current;
-      const section = sectionRef.current;
-      if (!track || !section) return;
+      if (!track || !sectionRef.current) return;
 
-      const anim = gsap.to(track, {
-        x: () =>
-          -(trackRef.current
-            ? trackRef.current.scrollWidth - window.innerWidth
-            : 0),
+      // Calculate the exact distance to scroll horizontally
+      const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
+
+      const tween = gsap.to(track, {
+        x: getScrollAmount,
         ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          pin: true,
-          pinSpacing: true,
-          scrub: true,
-          start: "top top",
-          end: () =>
-            "+=" +
-            (trackRef.current
-              ? trackRef.current.scrollWidth - window.innerWidth
-              : 0),
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            const totalCards = 9;
-            const index = Math.min(
-              Math.floor(self.progress * totalCards),
-              totalCards - 1
-            );
-            setActiveCardIndex(index);
-          },
-        },
       });
 
-      return () => {
-        anim.kill();
-      };
-    });
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top top",
+        end: () => `+=${track.scrollWidth - window.innerWidth}`,
+        pin: true,
+        animation: tween,
+        scrub: 1,
+        invalidateOnRefresh: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const totalCards = 9;
+          const index = Math.min(
+            Math.floor(self.progress * totalCards),
+            totalCards - 1
+          );
+          setActiveCardIndex(index);
+        },
+      });
+    }, sectionRef);
 
-    // Force ScrollTrigger refresh after DOM and fonts paint to prevent scroll trap
+    // Force refresh after layout is painted
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 500);
 
-    if (typeof document !== "undefined" && document.fonts) {
-      document.fonts.ready.then(() => {
-        ScrollTrigger.refresh();
-      });
-    }
-
     return () => {
       clearTimeout(timer);
-      mm.revert();
+      ctx.revert();
     };
   }, [reducedMotion]);
 
@@ -152,7 +142,7 @@ export default function SelectedWork() {
       ref={sectionRef}
       id="work"
       aria-label="Selected Projects and Case Studies"
-      className="relative h-auto md:h-screen w-full flex flex-col justify-center overflow-x-hidden overflow-y-visible py-16 md:py-0"
+      className="relative h-auto md:h-screen w-full flex flex-col justify-center overflow-hidden py-16 md:py-0"
     >
       {/* Header bar cleanly integrated into pinned container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mb-6 shrink-0">
@@ -176,7 +166,7 @@ export default function SelectedWork() {
       </div>
 
       {/* Horizontal Scroll Track (Desktop) / Vertical Stack (Mobile) */}
-      <div className="w-full max-w-3xl md:max-w-none mx-auto px-4 sm:px-6 lg:px-8 flex items-center overflow-x-hidden overflow-y-visible">
+      <div className="w-full max-w-3xl md:max-w-none mx-auto px-4 sm:px-6 lg:px-8 flex items-center overflow-hidden">
         <div
           ref={trackRef}
           className="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch w-full md:w-max will-change-transform"
