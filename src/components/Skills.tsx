@@ -177,8 +177,8 @@ export default function Skills() {
           onClick={() => setActiveTab("all")}
           className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
             activeTab === "all"
-              ? "bg-white text-black font-semibold shadow-[0_0_15px_rgba(255,255,255,0.3)]"
-              : "bg-[var(--glass)] text-[var(--text-muted)] hover:text-white border border-[var(--glass-border)]"
+              ? "bg-transparent border border-white text-white font-semibold shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+              : "bg-transparent text-[var(--text-muted)] hover:text-white border border-white/20 hover:border-white/40"
           }`}
           aria-pressed={activeTab === "all"}
         >
@@ -192,12 +192,8 @@ export default function Skills() {
             onClick={() => setActiveTab(cat.id)}
             className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
               activeTab === cat.id
-                ? cat.color === "cyan"
-                  ? "bg-[var(--cyan)] text-black font-semibold shadow-[0_0_15px_rgba(0,229,255,0.4)]"
-                  : cat.color === "violet"
-                  ? "bg-[var(--violet)] text-white font-semibold shadow-[0_0_15px_rgba(139,92,246,0.4)]"
-                  : "bg-[var(--amber)] text-black font-semibold shadow-[0_0_15px_rgba(255,184,107,0.4)]"
-                : "bg-[var(--glass)] text-[var(--text-muted)] hover:text-white border border-[var(--glass-border)]"
+                ? "bg-transparent border border-[var(--cyan)] text-white font-semibold shadow-[0_0_15px_rgba(0,229,255,0.3)]"
+                : "bg-transparent text-[var(--text-muted)] hover:text-white border border-white/20 hover:border-white/40"
             }`}
             aria-pressed={activeTab === cat.id}
           >
@@ -206,7 +202,7 @@ export default function Skills() {
         ))}
       </div>
 
-      {/* Categories Grid */}
+      {/* Categories Grid - Pure transparent cards with white outlines */}
       <div
         ref={gridRef}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -240,12 +236,12 @@ export default function Skills() {
                 {category.description}
               </p>
 
-              {/* Pills Grid */}
+              {/* Pills Grid - Pure transparent with crisp white outline */}
               <div className="flex flex-wrap gap-2">
                 {category.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="inline-flex items-center text-xs px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/[0.08] text-[var(--text)] hover:border-white/20 hover:text-white transition-colors"
+                    className="inline-flex items-center text-xs px-2.5 py-1 rounded-md bg-transparent border border-white/20 text-white hover:border-white/50 transition-colors"
                   >
                     {skill}
                   </span>

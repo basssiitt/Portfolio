@@ -145,7 +145,7 @@ export default function Process() {
             >
               {/* Step Node indicator */}
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-[var(--bg-2)] border border-[var(--cyan)]/40 flex items-center justify-center font-heading font-bold text-lg text-white shadow-[0_0_20px_rgba(0,229,255,0.2)]">
+                <div className="w-14 h-14 rounded-2xl bg-transparent border border-white/30 flex items-center justify-center font-heading font-bold text-lg text-white shadow-[0_0_20px_rgba(0,229,255,0.2)]">
                   {step.number}
                 </div>
                 <div className="lg:hidden flex-1 h-[2px] bg-white/10">
@@ -171,7 +171,7 @@ export default function Process() {
                     <span className="text-[11px] font-mono text-[var(--cyan)] uppercase tracking-wider">
                       {step.tagline}
                     </span>
-                    <span className="text-[11px] font-mono text-[var(--text-muted)] px-2 py-0.5 rounded bg-white/5">
+                    <span className="text-[11px] font-mono text-[var(--text-muted)] px-2 py-0.5 rounded bg-transparent border border-white/20">
                       {step.duration}
                     </span>
                   </div>

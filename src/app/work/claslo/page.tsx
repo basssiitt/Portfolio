@@ -35,10 +35,10 @@ export default function ClasloCaseStudy() {
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--cyan)] animate-ping" />
             Case Study
           </span>
-          <span className="text-xs font-mono text-emerald-400 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+          <span className="text-xs font-mono text-emerald-400 px-3 py-1 rounded-full bg-transparent border border-emerald-500/40">
             Live at claslo.com
           </span>
-          <span className="text-xs font-mono text-[var(--text-muted)] px-3 py-1 rounded-full bg-white/5 border border-white/10">
+          <span className="text-xs font-mono text-[var(--text-muted)] px-3 py-1 rounded-full bg-transparent border border-white/20">
             2024 – Present
           </span>
         </div>
@@ -56,7 +56,7 @@ export default function ClasloCaseStudy() {
 
         {/* Key Metadata Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6">
-          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+          <div className="p-4 rounded-xl bg-transparent border border-white/20">
             <span className="block text-xs font-mono text-[var(--text-muted)] uppercase">
               Role
             </span>
@@ -65,7 +65,7 @@ export default function ClasloCaseStudy() {
             </span>
           </div>
 
-          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+          <div className="p-4 rounded-xl bg-transparent border border-white/20">
             <span className="block text-xs font-mono text-[var(--text-muted)] uppercase">
               Core Stack
             </span>
@@ -74,7 +74,7 @@ export default function ClasloCaseStudy() {
             </span>
           </div>
 
-          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+          <div className="p-4 rounded-xl bg-transparent border border-white/20">
             <span className="block text-xs font-mono text-[var(--text-muted)] uppercase">
               Architecture
             </span>
@@ -83,7 +83,7 @@ export default function ClasloCaseStudy() {
             </span>
           </div>
 
-          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
+          <div className="p-4 rounded-xl bg-transparent border border-white/20">
             <span className="block text-xs font-mono text-[var(--text-muted)] uppercase">
               Live Product
             </span>
@@ -160,7 +160,7 @@ export default function ClasloCaseStudy() {
           </div>
 
           {/* TODO Comment */}
-          <div className="p-4 rounded-xl bg-white/[0.02] border border-dashed border-white/20 text-xs font-mono text-[var(--text-muted)]">
+          <div className="p-4 rounded-xl bg-transparent border border-dashed border-white/20 text-xs font-mono text-[var(--text-muted)]">
             {/* TODO: Add survey charts or baseline quote from school administrators */}
             <span className="text-[var(--cyan)] font-bold">TODO:</span> Include
             quantitative survey metrics collected from initial pilot academies.
@@ -247,7 +247,7 @@ export default function ClasloCaseStudy() {
           </div>
 
           {/* TODO Comment */}
-          <div className="p-4 rounded-xl bg-white/[0.02] border border-dashed border-white/20 text-xs font-mono text-[var(--text-muted)]">
+          <div className="p-4 rounded-xl bg-transparent border border-dashed border-white/20 text-xs font-mono text-[var(--text-muted)]">
             {/* TODO: Embed screenshot gallery or interactive UI walkthrough */}
             <span className="text-[var(--cyan)] font-bold">TODO:</span> Embed
             high-resolution UI screenshots of Claslo&apos;s billing and gradebook
@@ -277,7 +277,7 @@ export default function ClasloCaseStudy() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-            <div className="p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-2">
+            <div className="p-5 rounded-xl bg-transparent border border-white/20 space-y-2">
               <h3 className="font-heading font-semibold text-white text-sm">
                 Product &amp; Systems Architecture
               </h3>
@@ -287,7 +287,7 @@ export default function ClasloCaseStudy() {
               </p>
             </div>
 
-            <div className="p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-2">
+            <div className="p-5 rounded-xl bg-transparent border border-white/20 space-y-2">
               <h3 className="font-heading font-semibold text-white text-sm">
                 Modern Frontend Engineering
               </h3>
@@ -298,7 +298,7 @@ export default function ClasloCaseStudy() {
               </p>
             </div>
 
-            <div className="p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-2">
+            <div className="p-5 rounded-xl bg-transparent border border-white/20 space-y-2">
               <h3 className="font-heading font-semibold text-white text-sm">
                 Security &amp; RBAC Auth
               </h3>
@@ -309,7 +309,7 @@ export default function ClasloCaseStudy() {
               </p>
             </div>
 
-            <div className="p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-2">
+            <div className="p-5 rounded-xl bg-transparent border border-white/20 space-y-2">
               <h3 className="font-heading font-semibold text-white text-sm">
                 Operations &amp; Customer Success
               </h3>
@@ -457,7 +457,7 @@ export default function ClasloCaseStudy() {
           </h2>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
-            <div className="p-6 rounded-2xl bg-[var(--glass)] border border-[var(--glass-border)] text-center">
+            <div className="p-6 rounded-2xl bg-transparent border border-white/20 text-center">
               <span className="block text-3xl sm:text-4xl font-heading font-bold text-white">
                 99.98%
               </span>
@@ -466,7 +466,7 @@ export default function ClasloCaseStudy() {
               </span>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[var(--glass)] border border-[var(--glass-border)] text-center">
+            <div className="p-6 rounded-2xl bg-transparent border border-white/20 text-center">
               <span className="block text-3xl sm:text-4xl font-heading font-bold text-[var(--cyan)]">
                 &lt; 1.8s
               </span>
@@ -475,7 +475,7 @@ export default function ClasloCaseStudy() {
               </span>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[var(--glass)] border border-[var(--glass-border)] text-center">
+            <div className="p-6 rounded-2xl bg-transparent border border-white/20 text-center">
               <span className="block text-3xl sm:text-4xl font-heading font-bold text-[var(--violet)]">
                 85%
               </span>
@@ -484,7 +484,7 @@ export default function ClasloCaseStudy() {
               </span>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[var(--glass)] border border-[var(--glass-border)] text-center">
+            <div className="p-6 rounded-2xl bg-transparent border border-white/20 text-center">
               <span className="block text-3xl sm:text-4xl font-heading font-bold text-emerald-400">
                 0
               </span>
@@ -494,7 +494,7 @@ export default function ClasloCaseStudy() {
             </div>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3">
+          <div className="p-6 rounded-2xl bg-transparent border border-white/20 space-y-3">
             <h3 className="font-heading font-semibold text-white text-base">
               Client &amp; Operational Takeaway
             </h3>
@@ -507,7 +507,7 @@ export default function ClasloCaseStudy() {
           </div>
 
           {/* TODO Comment */}
-          <div className="p-4 rounded-xl bg-white/[0.02] border border-dashed border-white/20 text-xs font-mono text-[var(--text-muted)]">
+          <div className="p-4 rounded-xl bg-transparent border border-dashed border-white/20 text-xs font-mono text-[var(--text-muted)]">
             {/* TODO: Add featured video demo or customer testimonial quote */}
             <span className="text-[var(--cyan)] font-bold">TODO:</span> Insert
             testimonial quote from partner school principal and 60-second video

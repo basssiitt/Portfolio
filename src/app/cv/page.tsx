@@ -35,7 +35,7 @@ export default function CvPage() {
       {/* Main Résumé Document Container */}
       <GlassCard
         glowColor="none"
-        className="p-6 sm:p-12 space-y-12 bg-[var(--bg-2)]/80 print:bg-white print:text-black print:p-0 print:border-none print:shadow-none"
+        className="p-6 sm:p-12 space-y-12 bg-transparent print:bg-white print:text-black print:p-0 print:border-none print:shadow-none"
       >
         {/* HEADER SECTION */}
         <header className="border-b border-white/10 pb-8 print:border-black/20">
@@ -221,7 +221,7 @@ export default function CvPage() {
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
-            <div className="p-3.5 rounded-lg bg-white/[0.02] border border-white/5 print:border-gray-300">
+            <div className="p-3.5 rounded-lg bg-transparent border border-white/20 print:border-gray-300">
               <span className="font-bold text-white print:text-black block mb-1">
                 Frontend &amp; UI
               </span>
@@ -231,7 +231,7 @@ export default function CvPage() {
               </p>
             </div>
 
-            <div className="p-3.5 rounded-lg bg-white/[0.02] border border-white/5 print:border-gray-300">
+            <div className="p-3.5 rounded-lg bg-transparent border border-white/20 print:border-gray-300">
               <span className="font-bold text-white print:text-black block mb-1">
                 Backend &amp; Database
               </span>
@@ -241,7 +241,7 @@ export default function CvPage() {
               </p>
             </div>
 
-            <div className="p-3.5 rounded-lg bg-white/[0.02] border border-white/5 print:border-gray-300">
+            <div className="p-3.5 rounded-lg bg-transparent border border-white/20 print:border-gray-300">
               <span className="font-bold text-white print:text-black block mb-1">
                 AI &amp; Automation
               </span>
@@ -251,7 +251,7 @@ export default function CvPage() {
               </p>
             </div>
 
-            <div className="p-3.5 rounded-lg bg-white/[0.02] border border-white/5 print:border-gray-300">
+            <div className="p-3.5 rounded-lg bg-transparent border border-white/20 print:border-gray-300">
               <span className="font-bold text-white print:text-black block mb-1">
                 DevOps &amp; Compliance
               </span>

@@ -64,7 +64,7 @@ export default function Hero() {
       {/* Hero Foreground Content */}
       <div className="relative z-10 max-w-6xl w-full mx-auto text-center flex flex-col items-center px-4 sm:px-6">
         {/* Status pill badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--glass)] border border-[var(--glass-border)] backdrop-blur-xl mb-6 shadow-sm">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-transparent border border-white/20 mb-6 shadow-sm">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--cyan)] opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--cyan)]" />

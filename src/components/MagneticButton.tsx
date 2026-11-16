@@ -59,11 +59,7 @@ export default function MagneticButton({
     },
     secondary: {
       className:
-        "text-white font-medium border border-white/20 backdrop-blur-xl hover:border-[var(--cyan)] hover:bg-white/[0.1] hover:text-[var(--cyan)] hover:shadow-[0_0_25px_rgba(0,229,255,0.25)] active:scale-95 px-7 py-3.5",
-      style: {
-        backgroundColor: "rgba(255, 255, 255, 0.05)",
-        color: "#F5F7FA",
-      },
+        "text-white font-medium border border-white/20 bg-transparent hover:border-white/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] active:scale-95 px-7 py-3.5",
     },
     ghost: {
       className:

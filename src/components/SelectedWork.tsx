@@ -20,8 +20,6 @@ function TiltCard({
 }: TiltCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [transform, setTransform] = useState("");
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
   const reducedMotion = useReducedMotion();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -39,15 +37,9 @@ function TiltCard({
     setTransform(
       `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.01, 1.01, 1.01)`
     );
-    setMousePos({ x, y });
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
     setTransform(
       "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)"
     );
@@ -57,18 +49,15 @@ function TiltCard({
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
         transform: reducedMotion ? "none" : transform,
-        transition: isHovered
-          ? "transform 0.1s ease-out"
-          : "transform 0.4s ease-out",
+        transition: "transform 0.15s ease-out",
       }}
-      className={`relative overflow-hidden rounded-2xl bg-[#05060A]/40 backdrop-blur-xl border transition-all duration-300 ${
+      className={`relative rounded-2xl bg-transparent border transition-all duration-300 ${
         isActive
-          ? "border-white/40 shadow-[0_0_30px_rgba(0,229,255,0.14)] ring-1 ring-white/10"
-          : "border-white/20 hover:border-white/35"
+          ? "border-white/60 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+          : "border-white/20 hover:border-white/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
       } ${className}`}
     >
       {/* Subtle top-edge light highlight */}
@@ -76,17 +65,6 @@ function TiltCard({
         className="pointer-events-none absolute -top-px left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"
         aria-hidden="true"
       />
-
-      {/* Dynamic spotlight radial gradient follow on hover */}
-      {isHovered && !reducedMotion && (
-        <div
-          className="pointer-events-none absolute -inset-px rounded-2xl opacity-40 transition-opacity duration-300"
-          style={{
-            background: `radial-gradient(350px circle at ${mousePos.x}px ${mousePos.y}px, rgba(0, 229, 255, 0.12), transparent 70%)`,
-          }}
-          aria-hidden="true"
-        />
-      )}
       {children}
     </div>
   );
@@ -143,7 +121,7 @@ export default function SelectedWork() {
   }, [reducedMotion]);
 
   const cardContainerClass =
-    "w-[85vw] md:w-[55vw] lg:w-[45vw] xl:w-[42vw] max-w-[620px] h-[520px] max-h-[68vh] shrink-0 p-6 md:p-8 flex flex-col justify-between overflow-hidden";
+    "w-[85vw] md:w-[55vw] lg:w-[45vw] xl:w-[42vw] max-w-[620px] h-[520px] max-h-[68vh] shrink-0 p-6 md:p-8 flex flex-col justify-between overflow-hidden bg-transparent";
 
   return (
     <section
@@ -165,7 +143,7 @@ export default function SelectedWork() {
             <span className="text-xs font-mono text-[var(--text-muted)]">
               Card {activeCardIndex + 1} of 9
             </span>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-[var(--cyan)]">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-transparent border border-white/20 text-xs font-mono text-[var(--cyan)]">
               <span>Scroll horizontally</span>
               <span aria-hidden="true">→</span>
             </div>
@@ -189,11 +167,11 @@ export default function SelectedWork() {
             <div className="space-y-3.5">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[var(--cyan)]/10 border border-[var(--cyan)]/30 text-[var(--cyan)] font-mono text-[11px] uppercase tracking-wider font-semibold">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-transparent border border-[var(--cyan)]/40 text-[var(--cyan)] font-mono text-[11px] uppercase tracking-wider font-semibold">
                     <span className="w-1.5 h-1.5 rounded-full bg-[var(--cyan)] animate-ping" />
                     Flagship Venture
                   </span>
-                  <span className="text-[11px] font-mono text-[var(--text-muted)] px-2 py-0.5 rounded-full bg-white/5 border border-white/10">
+                  <span className="text-[11px] font-mono text-white px-2 py-0.5 rounded-full bg-transparent border border-white/20">
                     Solo Full-Stack
                   </span>
                 </div>
@@ -201,7 +179,7 @@ export default function SelectedWork() {
                   href="https://claslo.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs font-mono text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 hover:underline"
+                  className="text-xs font-mono text-emerald-400 px-2 py-0.5 rounded-full bg-transparent border border-emerald-500/30 hover:underline"
                 >
                   claslo.com ↗
                 </a>
@@ -217,7 +195,7 @@ export default function SelectedWork() {
                 real-time attendance, and parent communication into one fast platform.
               </p>
 
-              {/* Tech Stack Pills */}
+              {/* Tech Stack Pills - 100% Transparent with White Outline */}
               <div className="flex flex-wrap gap-1.5">
                 {[
                   "Next.js 16",
@@ -230,29 +208,29 @@ export default function SelectedWork() {
                 ].map((tech) => (
                   <span
                     key={tech}
-                    className="text-[11px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[var(--text)] font-mono"
+                    className="text-[11px] px-2.5 py-0.5 rounded bg-transparent border border-white/20 text-white font-mono"
                   >
                     {tech}
                   </span>
                 ))}
               </div>
 
-              {/* Compact Dashboard Telemetry */}
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-2">
-                <div className="flex items-center justify-between pb-1.5 border-b border-white/5 text-[11px] font-mono">
+              {/* Compact Dashboard Telemetry - Pure Transparent */}
+              <div className="rounded-xl border border-white/20 bg-transparent p-3 space-y-2">
+                <div className="flex items-center justify-between pb-1.5 border-b border-white/10 text-[11px] font-mono">
                   <span className="text-[var(--cyan)]">https://app.claslo.com</span>
                   <span className="text-emerald-400">● 99.98% SLA Active</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center">
-                  <div className="p-1.5 rounded bg-white/[0.02] border border-white/5">
+                  <div className="p-1.5 rounded bg-transparent border border-white/10">
                     <span className="text-sm font-bold text-white block">100%</span>
                     <span className="text-[10px] text-[var(--text-muted)]">Solo-Built</span>
                   </div>
-                  <div className="p-1.5 rounded bg-white/[0.02] border border-white/5">
+                  <div className="p-1.5 rounded bg-transparent border border-white/10">
                     <span className="text-sm font-bold text-[var(--cyan)] block">&lt; 1.8s</span>
                     <span className="text-[10px] text-[var(--text-muted)]">LCP Median</span>
                   </div>
-                  <div className="p-1.5 rounded bg-white/[0.02] border border-white/5">
+                  <div className="p-1.5 rounded bg-transparent border border-white/10">
                     <span className="text-sm font-bold text-emerald-400 block">Automated</span>
                     <span className="text-[10px] text-[var(--text-muted)]">Fee Invoicing</span>
                   </div>
@@ -293,7 +271,7 @@ export default function SelectedWork() {
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--violet)] font-semibold">
                   {"//"} 02. ARCHITECTURE • MULTI-TENANCY
                 </span>
-                <span className="text-[11px] font-mono text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                <span className="text-[11px] font-mono text-emerald-400 px-2 py-0.5 rounded bg-transparent border border-emerald-500/30">
                   Sub-10ms Routing
                 </span>
               </div>
@@ -319,16 +297,16 @@ export default function SelectedWork() {
                 ].map((tag) => (
                   <span
                     key={tag}
-                    className="text-[11px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[var(--text)] font-mono"
+                    className="text-[11px] px-2.5 py-0.5 rounded bg-transparent border border-white/20 text-white font-mono"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              {/* Compact Middleware Inspector Visual */}
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3 font-mono text-[11px] space-y-1">
-                <div className="flex justify-between text-[var(--text-muted)] pb-1 border-b border-white/5">
+              {/* Compact Middleware Inspector Visual - Pure Transparent */}
+              <div className="rounded-xl border border-white/20 bg-transparent p-3 font-mono text-[11px] space-y-1">
+                <div className="flex justify-between text-[var(--text-muted)] pb-1 border-b border-white/10">
                   <span className="text-[var(--violet)]">TENANT MIDDLEWARE INSPECTOR</span>
                   <span className="text-emerald-400">200 OK</span>
                 </div>
@@ -368,7 +346,7 @@ export default function SelectedWork() {
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--amber)] font-semibold">
                   {"//"} 03. FINTECH ENGINE • BILLING
                 </span>
-                <span className="text-[11px] font-mono text-[var(--amber)] px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20">
+                <span className="text-[11px] font-mono text-[var(--amber)] px-2 py-0.5 rounded bg-transparent border border-amber-500/30">
                   15% Leakage Saved
                 </span>
               </div>
@@ -394,25 +372,25 @@ export default function SelectedWork() {
                 ].map((tag) => (
                   <span
                     key={tag}
-                    className="text-[11px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[var(--text)] font-mono"
+                    className="text-[11px] px-2.5 py-0.5 rounded bg-transparent border border-white/20 text-white font-mono"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              {/* Compact Invoice Ledger Component */}
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-1.5">
-                <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] pb-1 border-b border-white/5">
+              {/* Compact Invoice Ledger Component - Pure Transparent */}
+              <div className="rounded-xl border border-white/20 bg-transparent p-3 space-y-1.5">
+                <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] pb-1 border-b border-white/10">
                   <span>BILLING LEDGER RUN</span>
                   <span className="text-emerald-400">100% DISPATCHED</span>
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-[11px]">
-                  <div className="p-1.5 rounded bg-white/[0.02] border border-white/5">
+                  <div className="p-1.5 rounded bg-transparent border border-white/10">
                     <span className="text-[10px] text-[var(--text-muted)] block">Vouchers Created</span>
                     <span className="text-sm font-bold text-white font-mono">4,820 Monthly</span>
                   </div>
-                  <div className="p-1.5 rounded bg-white/[0.02] border border-white/5">
+                  <div className="p-1.5 rounded bg-transparent border border-white/10">
                     <span className="text-[10px] text-[var(--text-muted)] block">WhatsApp Delivery</span>
                     <span className="text-sm font-bold text-emerald-400 font-mono">99.4% Verified</span>
                   </div>
@@ -447,7 +425,7 @@ export default function SelectedWork() {
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--cyan)] font-semibold">
                   {"//"} 04. HIGH CONCURRENCY • WEBSOCKETS
                 </span>
-                <span className="text-[11px] font-mono text-[var(--cyan)] px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20">
+                <span className="text-[11px] font-mono text-[var(--cyan)] px-2 py-0.5 rounded bg-transparent border border-cyan-500/30">
                   Sub-100ms Sync
                 </span>
               </div>
@@ -473,16 +451,16 @@ export default function SelectedWork() {
                 ].map((tag) => (
                   <span
                     key={tag}
-                    className="text-[11px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[var(--text)] font-mono"
+                    className="text-[11px] px-2.5 py-0.5 rounded bg-transparent border border-white/20 text-white font-mono"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              {/* Compact Sync Telemetry */}
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-1 font-mono text-[11px]">
-                <div className="flex items-center justify-between pb-1 border-b border-white/5">
+              {/* Compact Sync Telemetry - Pure Transparent */}
+              <div className="rounded-xl border border-white/20 bg-transparent p-3 space-y-1 font-mono text-[11px]">
+                <div className="flex items-center justify-between pb-1 border-b border-white/10">
                   <span className="text-white/60">PEAK SPIKE BUFFER</span>
                   <span className="text-emerald-400">0 PACKETS LOST</span>
                 </div>
@@ -521,7 +499,7 @@ export default function SelectedWork() {
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--violet)] font-semibold">
                   {"//"} 05. APPLIED AI &amp; AGENTS • SAAS MVP
                 </span>
-                <span className="text-[11px] font-mono text-[var(--violet)] px-2 py-0.5 rounded bg-violet-500/10 border border-violet-500/20">
+                <span className="text-[11px] font-mono text-[var(--violet)] px-2 py-0.5 rounded bg-transparent border border-violet-500/30">
                   Hybrid Search
                 </span>
               </div>
@@ -548,16 +526,16 @@ export default function SelectedWork() {
                 ].map((tag) => (
                   <span
                     key={tag}
-                    className="text-[11px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[var(--text)] font-mono"
+                    className="text-[11px] px-2.5 py-0.5 rounded bg-transparent border border-white/20 text-white font-mono"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              {/* Compact Agent Reasoning Trace */}
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3 font-mono text-[11px] space-y-1">
-                <div className="flex justify-between text-[var(--text-muted)] pb-1 border-b border-white/5">
+              {/* Compact Agent Reasoning Trace - Pure Transparent */}
+              <div className="rounded-xl border border-white/20 bg-transparent p-3 font-mono text-[11px] space-y-1">
+                <div className="flex justify-between text-[var(--text-muted)] pb-1 border-b border-white/10">
                   <span className="text-[var(--violet)]">AGENT REASONING TRACE</span>
                   <span>accuracy: 99.2%</span>
                 </div>
@@ -596,7 +574,7 @@ export default function SelectedWork() {
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--amber)] font-semibold">
                   {"//"} 06. FINTECH PLATFORM • ARCHITECTURAL MVP
                 </span>
-                <span className="text-[11px] font-mono text-[var(--amber)] px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20">
+                <span className="text-[11px] font-mono text-[var(--amber)] px-2 py-0.5 rounded bg-transparent border border-amber-500/30">
                   Double-Entry
                 </span>
               </div>
@@ -623,16 +601,16 @@ export default function SelectedWork() {
                 ].map((tag) => (
                   <span
                     key={tag}
-                    className="text-[11px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[var(--text)] font-mono"
+                    className="text-[11px] px-2.5 py-0.5 rounded bg-transparent border border-white/20 text-white font-mono"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              {/* Compact Ledger Audit Log */}
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-1 font-mono text-[11px]">
-                <div className="flex justify-between text-[var(--text-muted)] pb-1 border-b border-white/5">
+              {/* Compact Ledger Audit Log - Pure Transparent */}
+              <div className="rounded-xl border border-white/20 bg-transparent p-3 space-y-1 font-mono text-[11px]">
+                <div className="flex justify-between text-[var(--text-muted)] pb-1 border-b border-white/10">
                   <span className="text-[var(--amber)]">IMMUTABLE LEDGER RECORD</span>
                   <span className="text-emerald-400">ZERO-SUM OK</span>
                 </div>
@@ -671,7 +649,7 @@ export default function SelectedWork() {
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--cyan)] font-semibold">
                   {"//"} 07. CI/CD TOOLING • QUALITY
                 </span>
-                <span className="text-[11px] font-mono text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                <span className="text-[11px] font-mono text-emerald-400 px-2 py-0.5 rounded bg-transparent border border-emerald-500/30">
                   95+ Lighthouse
                 </span>
               </div>
@@ -698,29 +676,29 @@ export default function SelectedWork() {
                 ].map((tag) => (
                   <span
                     key={tag}
-                    className="text-[11px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[var(--text)] font-mono"
+                    className="text-[11px] px-2.5 py-0.5 rounded bg-transparent border border-white/20 text-white font-mono"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              {/* Compact CI Audit Scorecard */}
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-1.5">
-                <div className="flex items-center justify-between text-[11px] font-mono pb-1 border-b border-white/5">
+              {/* Compact CI Audit Scorecard - Pure Transparent */}
+              <div className="rounded-xl border border-white/20 bg-transparent p-3 space-y-1.5">
+                <div className="flex items-center justify-between text-[11px] font-mono pb-1 border-b border-white/10">
                   <span className="text-white/60">CI BENCHMARK AUDIT</span>
                   <span className="text-emerald-400">PASSED ALL CHECKS</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
-                  <div className="p-1.5 rounded bg-white/[0.02]">
+                  <div className="p-1.5 rounded bg-transparent border border-white/10">
                     <span className="text-sm font-bold text-emerald-400 block">100</span>
                     <span className="text-[10px] text-[var(--text-muted)]">Performance</span>
                   </div>
-                  <div className="p-1.5 rounded bg-white/[0.02]">
+                  <div className="p-1.5 rounded bg-transparent border border-white/10">
                     <span className="text-sm font-bold text-emerald-400 block">100</span>
                     <span className="text-[10px] text-[var(--text-muted)]">Accessibility</span>
                   </div>
-                  <div className="p-1.5 rounded bg-white/[0.02]">
+                  <div className="p-1.5 rounded bg-transparent border border-white/10">
                     <span className="text-sm font-bold text-emerald-400 block">100</span>
                     <span className="text-[10px] text-[var(--text-muted)]">Best Practices</span>
                   </div>
@@ -755,7 +733,7 @@ export default function SelectedWork() {
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--violet)] font-semibold">
                   {"//"} 08. CLOUD SYSTEMS • EDGE
                 </span>
-                <span className="text-[11px] font-mono text-[var(--cyan)] px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20">
+                <span className="text-[11px] font-mono text-[var(--cyan)] px-2 py-0.5 rounded bg-transparent border border-cyan-500/30">
                   0.8ms Latency
                 </span>
               </div>
@@ -782,29 +760,29 @@ export default function SelectedWork() {
                 ].map((tag) => (
                   <span
                     key={tag}
-                    className="text-[11px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[var(--text)] font-mono"
+                    className="text-[11px] px-2.5 py-0.5 rounded bg-transparent border border-white/20 text-white font-mono"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              {/* Compact Global Edge Latency Map */}
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-1 font-mono text-[11px]">
-                <div className="flex justify-between text-[var(--text-muted)] pb-1 border-b border-white/5">
+              {/* Compact Global Edge Latency Map - Pure Transparent */}
+              <div className="rounded-xl border border-white/20 bg-transparent p-3 space-y-1 font-mono text-[11px]">
+                <div className="flex justify-between text-[var(--text-muted)] pb-1 border-b border-white/10">
                   <span className="text-[var(--violet)]">GLOBAL POP LATENCY</span>
                   <span className="text-emerald-400">85% DB OFFLOAD</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center text-[11px]">
-                  <div className="p-1.5 rounded bg-white/[0.02]">
+                  <div className="p-1.5 rounded bg-transparent border border-white/10">
                     <span className="text-white font-bold block">0.6ms</span>
                     <span className="text-[10px] text-[var(--text-muted)]">IAD (US-East)</span>
                   </div>
-                  <div className="p-1.5 rounded bg-white/[0.02]">
+                  <div className="p-1.5 rounded bg-transparent border border-white/10">
                     <span className="text-white font-bold block">0.7ms</span>
                     <span className="text-[10px] text-[var(--text-muted)]">FRA (Europe)</span>
                   </div>
-                  <div className="p-1.5 rounded bg-white/[0.02]">
+                  <div className="p-1.5 rounded bg-transparent border border-white/10">
                     <span className="text-white font-bold block">1.1ms</span>
                     <span className="text-[10px] text-[var(--text-muted)]">SIN (Asia)</span>
                   </div>
@@ -839,7 +817,7 @@ export default function SelectedWork() {
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--cyan)] font-semibold">
                   {"//"} 09. NEXT VENTURE • PARTNERSHIP
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-mono">
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-transparent border border-emerald-500/40 text-emerald-400 text-[11px] font-mono">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   Booking Open
                 </span>
@@ -856,7 +834,8 @@ export default function SelectedWork() {
                 to 4 weeks.
               </p>
 
-              <div className="p-3 rounded-xl bg-black/40 border border-white/10 space-y-1.5 font-mono text-[11px]">
+              {/* Action box - Pure Transparent */}
+              <div className="p-3 rounded-xl bg-transparent border border-white/20 space-y-1.5 font-mono text-[11px]">
                 <div className="flex justify-between text-[var(--text-muted)]">
                   <span>Turnaround Velocity</span>
                   <span className="text-[var(--cyan)]">2 - 4 Weeks</span>

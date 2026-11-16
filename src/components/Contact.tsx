@@ -131,10 +131,10 @@ export default function Contact() {
                       : "noopener noreferrer"
                   }
                   aria-label={item.label}
-                  className="group flex items-center justify-between p-3.5 rounded-xl bg-white/[0.02] border border-white/5 hover:border-[var(--cyan)]/40 hover:bg-white/[0.05] transition-all"
+                  className="group flex items-center justify-between p-3.5 rounded-xl bg-transparent border border-white/20 hover:border-white/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-white/5 group-hover:scale-110 transition-transform">
+                    <div className="p-2 rounded-lg bg-transparent border border-white/10 group-hover:scale-110 transition-transform">
                       {item.icon}
                     </div>
                     <div>
@@ -147,7 +147,7 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/5 text-[var(--text-muted)] group-hover:text-white">
+                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-transparent border border-white/20 text-[var(--text-muted)] group-hover:text-white">
                     {item.badge} ↗
                   </span>
                 </a>
@@ -250,7 +250,7 @@ export default function Contact() {
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder-white/20 focus:border-[var(--cyan)] focus:bg-white/[0.06] text-sm focus-visible:outline-none transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-transparent border border-white/20 text-white placeholder-white/30 focus:border-white/60 focus:shadow-[0_0_15px_rgba(255,255,255,0.1)] text-sm focus-visible:outline-none transition-all"
                     />
                   </div>
 
@@ -270,7 +270,7 @@ export default function Contact() {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder-white/20 focus:border-[var(--cyan)] focus:bg-white/[0.06] text-sm focus-visible:outline-none transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-transparent border border-white/20 text-white placeholder-white/30 focus:border-white/60 focus:shadow-[0_0_15px_rgba(255,255,255,0.1)] text-sm focus-visible:outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -288,24 +288,24 @@ export default function Contact() {
                     onChange={(e) =>
                       setFormData({ ...formData, interest: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-[#0A0E1A] border border-white/10 text-white text-sm focus:border-[var(--cyan)] focus-visible:outline-none transition-colors"
+                    className="w-full px-4 py-3 rounded-xl bg-transparent border border-white/20 text-white text-sm focus:border-white/60 focus:shadow-[0_0_15px_rgba(255,255,255,0.1)] focus-visible:outline-none transition-all"
                   >
-                    <option value="Client Project / MVP">
+                    <option value="Client Project / MVP" className="bg-[#05060A] text-white">
                       Client Project / SaaS MVP Build
                     </option>
-                    <option value="Recruiting / Senior Full Stack">
+                    <option value="Recruiting / Senior Full Stack" className="bg-[#05060A] text-white">
                       Recruiting / Full-Stack Engineering Role
                     </option>
-                    <option value="AI Integration">
+                    <option value="AI Integration" className="bg-[#05060A] text-white">
                       AI Chatbot / Vector RAG Integration
                     </option>
-                    <option value="Performance & A11y Audit">
+                    <option value="Performance & A11y Audit" className="bg-[#05060A] text-white">
                       Performance &amp; Accessibility (A11y) Overhaul
                     </option>
-                    <option value="School / Education System">
+                    <option value="School / Education System" className="bg-[#05060A] text-white">
                       Custom School Management Setup (Claslo-grade)
                     </option>
-                    <option value="General Technical Inquiry">
+                    <option value="General Technical Inquiry" className="bg-[#05060A] text-white">
                       General Technical Advisory
                     </option>
                   </select>
@@ -327,7 +327,7 @@ export default function Contact() {
                     onChange={(e) =>
                       setFormData({ ...formData, message: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder-white/20 focus:border-[var(--cyan)] focus:bg-white/[0.06] text-sm focus-visible:outline-none transition-colors resize-none"
+                    className="w-full px-4 py-3 rounded-xl bg-transparent border border-white/20 text-white placeholder-white/30 focus:border-white/60 focus:shadow-[0_0_15px_rgba(255,255,255,0.1)] text-sm focus-visible:outline-none transition-all resize-none"
                   />
                 </div>
 
