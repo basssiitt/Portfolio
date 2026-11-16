@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useSpring } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 
 export default function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -11,16 +11,7 @@ export default function ScrollProgress() {
     restDelta: 0.001,
   });
 
-  const [prefersReduced, setPrefersReduced] = useState(false);
-
-  useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReduced(media.matches);
-
-    const listener = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
-    media.addEventListener("change", listener);
-    return () => media.removeEventListener("change", listener);
-  }, []);
+  const prefersReduced = useReducedMotion();
 
   if (prefersReduced) {
     return null;

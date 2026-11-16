@@ -127,7 +127,7 @@ export default function Services() {
                         : "text-[var(--amber)]"
                     }`}
                   >
-                    // SERVICE {service.number}
+                    {"//"} SERVICE {service.number}
                   </span>
                   <span className="text-[11px] font-mono text-[var(--text-muted)] px-2 py-0.5 rounded bg-white/5 border border-white/5">
                     {service.timeline}

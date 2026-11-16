@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import MagneticButton from "./MagneticButton";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 
 // Dynamically import Three.js scene with ssr: false
 const HeroScene = dynamic(() => import("./three/HeroScene"), {
@@ -19,18 +20,7 @@ const rotatingTitles = [
 
 export default function Hero() {
   const [titleIndex, setTitleIndex] = useState(0);
-  const [reducedMotion, setReducedMotion] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(media.matches);
-
-    const listener = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    media.addEventListener("change", listener);
-    return () => media.removeEventListener("change", listener);
-  }, []);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -62,7 +52,7 @@ export default function Hero() {
       />
 
       {/* R3F 3D Canvas or Static Gradient for reduced motion */}
-      {mounted && !reducedMotion ? (
+      {!reducedMotion ? (
         <HeroScene reducedMotion={reducedMotion} />
       ) : (
         <div

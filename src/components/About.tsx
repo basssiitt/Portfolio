@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import GlassCard from "./GlassCard";
 import SectionHeading from "./SectionHeading";
 import MagneticButton from "./MagneticButton";

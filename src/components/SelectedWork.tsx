@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import Link from "next/link";
+import { useRef, useState } from "react";
 import SectionHeading from "./SectionHeading";
 import MagneticButton from "./MagneticButton";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 
 interface TiltCardProps {
   children: React.ReactNode;
@@ -20,12 +20,7 @@ function TiltCard({
   const [transform, setTransform] = useState("");
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(media.matches);
-  }, []);
+  const reducedMotion = useReducedMotion();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (reducedMotion || !cardRef.current) return;
@@ -208,7 +203,7 @@ export default function SelectedWork() {
                 </div>
               </div>
 
-              {/* Graphical / Interactive Showcase Preview */}
+              {/* Graphical Showcase Preview */}
               <div className="lg:col-span-5 relative">
                 <div className="rounded-xl border border-white/10 bg-[#0A0E1A]/90 p-5 shadow-2xl space-y-4">
                   {/* Browser bar */}

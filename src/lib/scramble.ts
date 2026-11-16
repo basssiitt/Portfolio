@@ -25,7 +25,6 @@ export function useScramble(
       return;
     }
 
-    setIsDone(false);
     iterationRef.current = 0;
 
     if (frameRef.current) cancelAnimationFrame(frameRef.current);
@@ -66,7 +65,13 @@ export function useScramble(
 
   useEffect(() => {
     if (autoStart) {
-      start();
+      const anim = requestAnimationFrame(() => {
+        start();
+      });
+      return () => {
+        cancelAnimationFrame(anim);
+        if (frameRef.current) cancelAnimationFrame(frameRef.current);
+      };
     }
     return () => {
       if (frameRef.current) cancelAnimationFrame(frameRef.current);

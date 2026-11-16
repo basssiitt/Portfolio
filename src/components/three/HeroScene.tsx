@@ -1,8 +1,54 @@
 "use client";
 
-import { useRef, useMemo } from "react";
+import { useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+
+// Generate particle buffers once at module scope to ensure pure idempotent render
+function generateParticleBuffers(count = 1600) {
+  const pos = new Float32Array(count * 3);
+  const col = new Float32Array(count * 3);
+
+  const cyan = new THREE.Color("#00E5FF");
+  const violet = new THREE.Color("#8B5CF6");
+  const amber = new THREE.Color("#FFB86B");
+  const white = new THREE.Color("#FFFFFF");
+
+  for (let i = 0; i < count; i++) {
+    const u = (i * 0.6180339887) % 1;
+    const v = ((i + 1) * 0.4142135623) % 1;
+    const theta = u * 2.0 * Math.PI;
+    const phi = Math.acos(2.0 * v - 1.0);
+    const radius = 2.2 + (((i % 17) / 17) - 0.5) * 1.8;
+
+    const x = radius * Math.sin(phi) * Math.cos(theta);
+    const y = radius * Math.sin(phi) * Math.sin(theta);
+    const z = radius * Math.cos(phi);
+
+    pos[i * 3] = x;
+    pos[i * 3 + 1] = y;
+    pos[i * 3 + 2] = z;
+
+    // Color distribution based on index
+    let chosenColor = cyan;
+    const pick = (i % 10) / 10;
+    if (pick > 0.75) {
+      chosenColor = amber;
+    } else if (pick > 0.4) {
+      chosenColor = violet;
+    } else if (pick < 0.1) {
+      chosenColor = white;
+    }
+
+    col[i * 3] = chosenColor.r;
+    col[i * 3 + 1] = chosenColor.g;
+    col[i * 3 + 2] = chosenColor.b;
+  }
+
+  return { pos, col };
+}
+
+const { pos: staticPositions, col: staticColors } = generateParticleBuffers();
 
 interface ParticleFieldProps {
   reducedMotion?: boolean;
@@ -14,52 +60,6 @@ function ParticleField({ reducedMotion = false }: ParticleFieldProps) {
   const ringRef = useRef<THREE.Group>(null);
 
   const { pointer } = useThree();
-
-  // Generate particle positions and colors
-  const [positions, colors] = useMemo(() => {
-    const count = 1600;
-    const pos = new Float32Array(count * 3);
-    const col = new Float32Array(count * 3);
-
-    const cyan = new THREE.Color("#00E5FF");
-    const violet = new THREE.Color("#8B5CF6");
-    const amber = new THREE.Color("#FFB86B");
-    const white = new THREE.Color("#FFFFFF");
-
-    for (let i = 0; i < count; i++) {
-      // Spherical distribution with radius variation
-      const u = Math.random();
-      const v = Math.random();
-      const theta = u * 2.0 * Math.PI;
-      const phi = Math.acos(2.0 * v - 1.0);
-      const radius = 2.2 + (Math.random() - 0.5) * 1.8;
-
-      const x = radius * Math.sin(phi) * Math.cos(theta);
-      const y = radius * Math.sin(phi) * Math.sin(theta);
-      const z = radius * Math.cos(phi);
-
-      pos[i * 3] = x;
-      pos[i * 3 + 1] = y;
-      pos[i * 3 + 2] = z;
-
-      // Color selection
-      const pick = Math.random();
-      let chosenColor = cyan;
-      if (pick > 0.75) {
-        chosenColor = amber;
-      } else if (pick > 0.4) {
-        chosenColor = violet;
-      } else if (pick < 0.1) {
-        chosenColor = white;
-      }
-
-      col[i * 3] = chosenColor.r;
-      col[i * 3 + 1] = chosenColor.g;
-      col[i * 3 + 2] = chosenColor.b;
-    }
-
-    return [pos, col];
-  }, []);
 
   useFrame((state, delta) => {
     if (reducedMotion) return;
@@ -110,11 +110,11 @@ function ParticleField({ reducedMotion = false }: ParticleFieldProps) {
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            args={[positions, 3]}
+            args={[staticPositions, 3]}
           />
           <bufferAttribute
             attach="attributes-color"
-            args={[colors, 3]}
+            args={[staticColors, 3]}
           />
         </bufferGeometry>
         <pointsMaterial

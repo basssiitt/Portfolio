@@ -98,7 +98,7 @@ export default function CvPage() {
             id="summary-heading"
             className="font-heading text-xs font-mono uppercase tracking-widest text-[var(--cyan)] print:text-black font-bold"
           >
-            // Executive Summary
+            {"//"} Executive Summary
           </h2>
           <p className="text-sm sm:text-base text-[var(--text-muted)] print:text-gray-800 leading-relaxed">
             Technical founder and senior full-stack engineer with proven
@@ -118,7 +118,7 @@ export default function CvPage() {
             id="experience-heading"
             className="font-heading text-xs font-mono uppercase tracking-widest text-[var(--violet)] print:text-black font-bold"
           >
-            // Professional Experience
+            {"//"} Professional Experience
           </h2>
 
           <div className="space-y-8">
@@ -207,7 +207,7 @@ export default function CvPage() {
             id="skills-heading"
             className="font-heading text-xs font-mono uppercase tracking-widest text-[var(--amber)] print:text-black font-bold"
           >
-            // Technical Competencies
+            {"//"} Technical Competencies
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
@@ -259,7 +259,7 @@ export default function CvPage() {
             id="projects-heading"
             className="font-heading text-xs font-mono uppercase tracking-widest text-[var(--cyan)] print:text-black font-bold"
           >
-            // Selected Key Projects
+            {"//"} Selected Key Projects
           </h2>
 
           <div className="space-y-4 text-xs sm:text-sm">
@@ -316,7 +316,7 @@ export default function CvPage() {
             id="education-heading"
             className="font-heading text-xs font-mono uppercase tracking-widest text-[var(--violet)] print:text-black font-bold"
           >
-            // Education &amp; Approach
+            {"//"} Education &amp; Approach
           </h2>
           <p className="text-xs sm:text-sm text-[var(--text-muted)] print:text-gray-700 leading-relaxed">
             Continuous technical education in Software Architecture, Distributed
