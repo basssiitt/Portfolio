@@ -67,9 +67,9 @@ function ParticleField({ reducedMotion = false }: ParticleFieldProps) {
     if (reducedMotion) return;
 
     const handlePointerMove = (e: MouseEvent) => {
-      // Normalize mouse to [-1, 1] range
+      // Normalize mouse to [-1, 1] range with inverted Y so moving up moves particles up
       const normX = (e.clientX / window.innerWidth) * 2 - 1;
-      const normY = (e.clientY / window.innerHeight) * 2 - 1;
+      const normY = -(e.clientY / window.innerHeight) * 2 + 1;
       mouseTarget.current.x = normX;
       mouseTarget.current.y = normY;
     };
@@ -85,9 +85,23 @@ function ParticleField({ reducedMotion = false }: ParticleFieldProps) {
     const damping = Math.min(delta * 2.5, 0.08);
 
     if (containerGroupRef.current) {
-      // Fluid mouse parallax on the main container group
-      const targetRotX = -mouseTarget.current.y * 0.4;
-      const targetRotY = mouseTarget.current.x * 0.45;
+      // Fluid mouse parallax: position shift + tilt follow cursor smoothly
+      const targetPosX = mouseTarget.current.x * 0.3;
+      const targetPosY = mouseTarget.current.y * 0.3;
+
+      containerGroupRef.current.position.x = THREE.MathUtils.lerp(
+        containerGroupRef.current.position.x,
+        targetPosX,
+        damping
+      );
+      containerGroupRef.current.position.y = THREE.MathUtils.lerp(
+        containerGroupRef.current.position.y,
+        targetPosY,
+        damping
+      );
+
+      const targetRotX = -mouseTarget.current.y * 0.35;
+      const targetRotY = mouseTarget.current.x * 0.4;
 
       containerGroupRef.current.rotation.x = THREE.MathUtils.lerp(
         containerGroupRef.current.rotation.x,

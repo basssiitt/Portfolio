@@ -28,7 +28,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   background-color: var(--bg);
   color: var(--text);
   color-scheme: dark;

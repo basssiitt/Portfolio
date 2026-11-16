@@ -62,7 +62,7 @@ export default function Hero() {
       )}
 
       {/* Hero Foreground Content */}
-      <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
+      <div className="relative z-10 max-w-6xl w-full mx-auto text-center flex flex-col items-center px-4 sm:px-6">
         {/* Status pill badge */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--glass)] border border-[var(--glass-border)] backdrop-blur-xl mb-6 shadow-sm">
           <span className="relative flex h-2 w-2">
@@ -74,12 +74,9 @@ export default function Hero() {
           </span>
         </div>
 
-        {/* Huge Heading */}
-        <h1 className="font-heading font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-white mb-6 leading-[1.08]">
-          Abdul Basit{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--cyan)] via-white to-[var(--violet)]">
-            Chandio
-          </span>
+        {/* Huge Heading - solid high-contrast white with clamp to prevent cut off */}
+        <h1 className="font-heading font-extrabold text-[clamp(2.4rem,6.8vw,5.5rem)] tracking-tight text-white mb-6 leading-[1.08] max-w-5xl mx-auto drop-shadow-[0_4px_25px_rgba(0,0,0,0.9)]">
+          Abdul Basit Chandio
         </h1>
 
         {/* Rotating Subline */}
