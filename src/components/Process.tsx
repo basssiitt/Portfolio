@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import GlassCard from "./GlassCard";
 import SectionHeading from "./SectionHeading";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 
 const steps = [
   {
@@ -49,16 +50,12 @@ export default function Process() {
   const containerRef = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Check reduced motion
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-    if (prefersReducedMotion) {
+    if (reducedMotion) {
       if (progressBarRef.current) {
         progressBarRef.current.style.width = "100%";
       }
@@ -86,21 +83,22 @@ export default function Process() {
         );
       }
 
-      // Stagger card reveals on scroll
+      // Stagger card reveals on scroll with toggleActions
       const validCards = cardsRef.current.filter(Boolean);
       if (validCards.length > 0 && containerRef.current) {
         gsap.fromTo(
           validCards,
-          { opacity: 0, y: 30 },
+          { opacity: 0, y: 35 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
+            duration: 0.7,
             stagger: 0.15,
             ease: "power2.out",
             scrollTrigger: {
               trigger: containerRef.current,
-              start: "top 70%",
+              start: "top 85%",
+              toggleActions: "play none none reverse",
             },
           }
         );
@@ -108,7 +106,7 @@ export default function Process() {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <section

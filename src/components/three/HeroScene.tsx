@@ -1,11 +1,11 @@
 "use client";
 
-import { useRef } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useRef, useEffect } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 // Generate particle buffers once at module scope to ensure pure idempotent render
-function generateParticleBuffers(count = 1600) {
+function generateParticleBuffers(count = 1800) {
   const pos = new Float32Array(count * 3);
   const col = new Float32Array(count * 3);
 
@@ -19,7 +19,7 @@ function generateParticleBuffers(count = 1600) {
     const v = ((i + 1) * 0.4142135623) % 1;
     const theta = u * 2.0 * Math.PI;
     const phi = Math.acos(2.0 * v - 1.0);
-    const radius = 2.2 + (((i % 17) / 17) - 0.5) * 1.8;
+    const radius = 2.2 + (((i % 23) / 23) - 0.5) * 2.0;
 
     const x = radius * Math.sin(phi) * Math.cos(theta);
     const y = radius * Math.sin(phi) * Math.sin(theta);
@@ -31,10 +31,10 @@ function generateParticleBuffers(count = 1600) {
 
     // Color distribution based on index
     let chosenColor = cyan;
-    const pick = (i % 10) / 10;
+    const pick = (i % 12) / 12;
     if (pick > 0.75) {
       chosenColor = amber;
-    } else if (pick > 0.4) {
+    } else if (pick > 0.35) {
       chosenColor = violet;
     } else if (pick < 0.1) {
       chosenColor = white;
@@ -55,56 +55,72 @@ interface ParticleFieldProps {
 }
 
 function ParticleField({ reducedMotion = false }: ParticleFieldProps) {
+  const containerGroupRef = useRef<THREE.Group>(null);
   const pointsRef = useRef<THREE.Points>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const ringRef = useRef<THREE.Group>(null);
 
-  const { pointer } = useThree();
+  // Smooth mouse coordinates tracking via window listener
+  const mouseTarget = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (reducedMotion) return;
+
+    const handlePointerMove = (e: MouseEvent) => {
+      // Normalize mouse to [-1, 1] range
+      const normX = (e.clientX / window.innerWidth) * 2 - 1;
+      const normY = (e.clientY / window.innerHeight) * 2 - 1;
+      mouseTarget.current.x = normX;
+      mouseTarget.current.y = normY;
+    };
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    return () => window.removeEventListener("pointermove", handlePointerMove);
+  }, [reducedMotion]);
 
   useFrame((state, delta) => {
     if (reducedMotion) return;
 
-    const time = state.clock.getElapsedTime();
+    // Smooth damping interpolation (MathUtils.lerp with frame-rate independent factor)
+    const damping = Math.min(delta * 2.5, 0.08);
 
-    // Auto-rotation + mouse parallax lerp
+    if (containerGroupRef.current) {
+      // Fluid mouse parallax on the main container group
+      const targetRotX = -mouseTarget.current.y * 0.4;
+      const targetRotY = mouseTarget.current.x * 0.45;
+
+      containerGroupRef.current.rotation.x = THREE.MathUtils.lerp(
+        containerGroupRef.current.rotation.x,
+        targetRotX,
+        damping
+      );
+      containerGroupRef.current.rotation.y = THREE.MathUtils.lerp(
+        containerGroupRef.current.rotation.y,
+        targetRotY,
+        damping
+      );
+    }
+
+    // Continuous smooth auto-rotation on the inner points independently
     if (pointsRef.current) {
-      pointsRef.current.rotation.y += delta * 0.08;
-      pointsRef.current.rotation.x = THREE.MathUtils.lerp(
-        pointsRef.current.rotation.x,
-        -pointer.y * 0.35 + Math.sin(time * 0.2) * 0.05,
-        0.05
-      );
-      pointsRef.current.rotation.z = THREE.MathUtils.lerp(
-        pointsRef.current.rotation.z,
-        pointer.x * 0.35,
-        0.05
-      );
+      pointsRef.current.rotation.y += delta * 0.06;
+      pointsRef.current.rotation.z += delta * 0.02;
     }
 
     // Inner geometric core rotation
     if (coreRef.current) {
-      coreRef.current.rotation.x -= delta * 0.15;
-      coreRef.current.rotation.y += delta * 0.2;
+      coreRef.current.rotation.x -= delta * 0.1;
+      coreRef.current.rotation.y += delta * 0.15;
     }
 
-    // Orbital ring rotation
+    // Orbital rings rotation
     if (ringRef.current) {
-      ringRef.current.rotation.z += delta * 0.1;
-      ringRef.current.rotation.x = THREE.MathUtils.lerp(
-        ringRef.current.rotation.x,
-        -pointer.y * 0.2,
-        0.05
-      );
-      ringRef.current.rotation.y = THREE.MathUtils.lerp(
-        ringRef.current.rotation.y,
-        pointer.x * 0.2,
-        0.05
-      );
+      ringRef.current.rotation.z += delta * 0.08;
     }
   });
 
   return (
-    <group>
+    <group ref={containerGroupRef}>
       {/* 3D Particle Cloud */}
       <points ref={pointsRef}>
         <bufferGeometry>
@@ -135,7 +151,7 @@ function ParticleField({ reducedMotion = false }: ParticleFieldProps) {
           wireframe
           color="#8B5CF6"
           transparent
-          opacity={0.15}
+          opacity={0.18}
         />
       </mesh>
 
@@ -146,7 +162,7 @@ function ParticleField({ reducedMotion = false }: ParticleFieldProps) {
           <meshBasicMaterial
             color="#00E5FF"
             transparent
-            opacity={0.25}
+            opacity={0.28}
           />
         </mesh>
         <mesh rotation={[-Math.PI / 4, Math.PI / 6, 0]}>
@@ -154,7 +170,7 @@ function ParticleField({ reducedMotion = false }: ParticleFieldProps) {
           <meshBasicMaterial
             color="#FFB86B"
             transparent
-            opacity={0.2}
+            opacity={0.22}
           />
         </mesh>
       </group>

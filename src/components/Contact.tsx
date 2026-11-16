@@ -8,8 +8,8 @@ import MagneticButton from "./MagneticButton";
 const contactLinks = [
   {
     name: "Email Directly",
-    handle: "contact@claslo.com",
-    href: "mailto:contact@claslo.com",
+    handle: "admin@claslo.com",
+    href: "mailto:admin@claslo.com",
     label: "Send email directly to Abdul Basit Chandio",
     icon: (
       <svg className="w-5 h-5 text-[var(--cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -17,6 +17,19 @@ const contactLinks = [
       </svg>
     ),
     badge: "Fastest Response",
+  },
+  {
+    name: "WhatsApp",
+    handle: "+92 312 7803616",
+    href: "https://wa.me/923127803616",
+    label: "Chat with Abdul Basit Chandio on WhatsApp",
+    icon: (
+      <svg className="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.585 1.761.884 2.789.885h.002c3.181 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.768-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.311.045-.698.077-2.12-.51-1.817-.749-2.986-2.593-3.076-2.713-.09-.12-1.282-1.705-1.282-3.251 0-1.545.811-2.308 1.098-2.62.287-.312.628-.39.837-.39.21 0 .42.002.604.012.195.01.455-.074.712.544.267.643.91 2.226.989 2.388.08.162.133.351.026.566-.107.215-.161.348-.319.537-.158.188-.332.42-.475.564-.158.16-.324.333-.139.651.185.318.824 1.359 1.768 2.202 1.215 1.082 2.239 1.417 2.557 1.574.318.158.503.138.69-.078.188-.216.804-.937 1.019-1.258.215-.322.43-.268.724-.16.294.108 1.866.88 2.188 1.04.322.16.537.24.616.376.08.136.08.788-.064 1.193z" />
+        <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 1.892.526 3.662 1.442 5.177L2 22l4.98-1.306A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.25a8.21 8.21 0 01-4.286-1.197l-.307-.183-3.18.834.849-3.1-.2-.318A8.225 8.225 0 013.75 12c0-4.549 3.701-8.25 8.25-8.25s8.25 3.701 8.25 8.25-3.701 8.25-8.25 8.25z" />
+      </svg>
+    ),
+    badge: "Instant Chat",
   },
   {
     name: "Schedule a Call",
@@ -44,8 +57,8 @@ const contactLinks = [
   },
   {
     name: "GitHub",
-    handle: "github.com/abdulbasitchandio",
-    href: "https://github.com",
+    handle: "github.com/basssiit",
+    href: "https://github.com/basssiit",
     label: "View open-source repositories on GitHub",
     icon: (
       <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -67,14 +80,13 @@ export default function Contact() {
   });
 
   const copyEmail = () => {
-    navigator.clipboard.writeText("contact@claslo.com");
+    navigator.clipboard.writeText("admin@claslo.com");
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Client-side submission acknowledgement
     setFormSubmitted(true);
   };
 
@@ -102,8 +114,8 @@ export default function Contact() {
                 Get in Touch
               </h3>
               <p className="text-sm text-[var(--text-muted)] mt-2">
-                I prioritize clarity and respond within 12 hours. Pick your
-                preferred communication medium below.
+                I prioritize clarity and respond within 12 hours. Reach out
+                directly via email, WhatsApp, or schedule a calendar call.
               </p>
             </div>
 
@@ -145,15 +157,15 @@ export default function Contact() {
             {/* Quick clipboard copy */}
             <div className="pt-2 border-t border-white/10 flex items-center justify-between">
               <span className="text-xs text-[var(--text-muted)] font-mono">
-                Prefer raw email?
+                Direct Email:
               </span>
               <button
                 type="button"
                 onClick={copyEmail}
-                className="text-xs font-mono text-[var(--cyan)] hover:underline focus-visible:outline-2 focus-visible:outline-[var(--cyan)] rounded p-1"
+                className="text-xs font-mono text-[var(--cyan)] hover:underline focus-visible:outline-2 focus-visible:outline-[var(--cyan)] rounded p-1 cursor-pointer"
                 aria-label="Copy contact email to clipboard"
               >
-                {copied ? "✓ Copied to clipboard!" : "Copy: contact@claslo.com"}
+                {copied ? "✓ Copied: admin@claslo.com" : "Copy: admin@claslo.com"}
               </button>
             </div>
           </GlassCard>
@@ -169,7 +181,7 @@ export default function Contact() {
                 <p className="text-xs text-[var(--text-muted)] mt-1 leading-relaxed">
                   Currently accepting 1 new SaaS build for next month, plus
                   select technical advising / fractional engineering
-                  engagements.
+                  engagements. WhatsApp or email for immediate response.
                 </p>
               </div>
             </div>
@@ -196,7 +208,7 @@ export default function Contact() {
                 <button
                   type="button"
                   onClick={() => setFormSubmitted(false)}
-                  className="text-xs text-[var(--cyan)] font-mono hover:underline mt-4"
+                  className="text-xs text-[var(--cyan)] font-mono hover:underline mt-4 cursor-pointer"
                 >
                   Send another inquiry
                 </button>
@@ -208,7 +220,16 @@ export default function Contact() {
                     Send a Message
                   </h3>
                   <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-1">
-                    Fill out the form below or book directly on Calendly.
+                    Fill out the form below, book on Calendly, or reach out on{" "}
+                    <a
+                      href="https://wa.me/923127803616"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-emerald-400 underline hover:text-emerald-300"
+                    >
+                      WhatsApp
+                    </a>
+                    .
                   </p>
                 </div>
 
@@ -312,14 +333,14 @@ export default function Contact() {
 
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
                   <p className="text-xs text-[var(--text-muted)]">
-                    Direct calendar link:{" "}
+                    Fast response:{" "}
                     <a
-                      href="https://calendly.com"
+                      href="https://wa.me/923127803616"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[var(--cyan)] hover:underline"
+                      className="text-emerald-400 hover:underline"
                     >
-                      Book a discovery call
+                      WhatsApp +92 312 7803616
                     </a>
                   </p>
 

@@ -52,10 +52,20 @@ export default function CvPage() {
             <div className="text-xs sm:text-sm text-[var(--text-muted)] print:text-gray-700 space-y-1 font-mono sm:text-right">
               <p>
                 <a
-                  href="mailto:contact@claslo.com"
+                  href="mailto:admin@claslo.com"
                   className="hover:text-[var(--cyan)] transition-colors"
                 >
-                  contact@claslo.com
+                  admin@claslo.com
+                </a>
+              </p>
+              <p>
+                <a
+                  href="https://wa.me/923127803616"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-emerald-400 text-emerald-400/90 transition-colors"
+                >
+                  WhatsApp: +92 312 7803616
                 </a>
               </p>
               <p>
@@ -70,22 +80,22 @@ export default function CvPage() {
               </p>
               <p>
                 <a
+                  href="https://github.com/basssiit"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[var(--cyan)] transition-colors"
+                >
+                  github.com/basssiit
+                </a>
+              </p>
+              <p>
+                <a
                   href="https://linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[var(--cyan)] transition-colors"
                 >
                   linkedin.com/in/abdulbasitchandio
-                </a>
-              </p>
-              <p>
-                <a
-                  href="https://github.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[var(--cyan)] transition-colors"
-                >
-                  github.com/abdulbasitchandio
                 </a>
               </p>
             </div>

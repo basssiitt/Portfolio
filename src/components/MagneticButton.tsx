@@ -46,16 +46,32 @@ export default function MagneticButton({
   };
 
   const baseStyles =
-    "inline-flex items-center justify-center font-medium rounded-full transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--cyan)] cursor-pointer text-sm md:text-base select-none";
+    "inline-flex items-center justify-center rounded-full transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--cyan)] cursor-pointer text-sm md:text-base select-none font-bold";
 
-  const variants = {
-    primary:
-      "bg-gradient-to-r from-[var(--cyan)] to-[var(--violet)] text-[#05060A] font-semibold shadow-[0_0_20px_rgba(0,229,255,0.25)] hover:shadow-[0_0_30px_rgba(0,229,255,0.45)] hover:brightness-110 px-6 py-3",
-    secondary:
-      "bg-[var(--glass)] text-[var(--text)] border border-[var(--glass-border)] backdrop-blur-md hover:border-[var(--cyan)] hover:bg-white/[0.08] hover:text-white px-6 py-3",
-    ghost:
-      "text-[var(--text-muted)] hover:text-[var(--cyan)] px-4 py-2 hover:bg-white/[0.04]",
+  const variantStyles: Record<string, { className: string; style?: React.CSSProperties }> = {
+    primary: {
+      className:
+        "text-slate-950 font-bold px-7 py-3.5 shadow-[0_0_25px_rgba(0,229,255,0.45)] hover:shadow-[0_0_35px_rgba(0,229,255,0.7)] hover:brightness-110 active:scale-95 border border-cyan-200/50",
+      style: {
+        background: "linear-gradient(135deg, #00E5FF 0%, #a78bfa 60%, #8B5CF6 100%)",
+        color: "#05060A",
+      },
+    },
+    secondary: {
+      className:
+        "text-white font-medium border border-white/20 backdrop-blur-xl hover:border-[var(--cyan)] hover:bg-white/[0.1] hover:text-[var(--cyan)] hover:shadow-[0_0_25px_rgba(0,229,255,0.25)] active:scale-95 px-7 py-3.5",
+      style: {
+        backgroundColor: "rgba(255, 255, 255, 0.05)",
+        color: "#F5F7FA",
+      },
+    },
+    ghost: {
+      className:
+        "text-[var(--text-muted)] hover:text-[var(--cyan)] px-4 py-2 hover:bg-white/[0.05] font-medium",
+    },
   };
+
+  const currentVariant = variantStyles[variant] || variantStyles.primary;
 
   const buttonContent = (
     <div className="relative z-10 flex items-center justify-center gap-2">
@@ -63,7 +79,7 @@ export default function MagneticButton({
     </div>
   );
 
-  const combinedClasses = `${baseStyles} ${variants[variant]} ${className}`;
+  const combinedClasses = `${baseStyles} ${currentVariant.className} ${className}`;
 
   return (
     <motion.div
@@ -79,6 +95,7 @@ export default function MagneticButton({
           <Link
             href={href}
             className={combinedClasses}
+            style={currentVariant.style}
             aria-label={ariaLabel}
             target={target}
             rel={rel}
@@ -90,6 +107,7 @@ export default function MagneticButton({
           <a
             href={href}
             className={combinedClasses}
+            style={currentVariant.style}
             aria-label={ariaLabel}
             target={target ?? "_blank"}
             rel={rel ?? "noopener noreferrer"}
@@ -103,6 +121,7 @@ export default function MagneticButton({
           type="button"
           onClick={onClick}
           className={combinedClasses}
+          style={currentVariant.style}
           aria-label={ariaLabel}
         >
           {buttonContent}

@@ -1,8 +1,12 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import GlassCard from "./GlassCard";
 import SectionHeading from "./SectionHeading";
 import MagneticButton from "./MagneticButton";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 
 const pillars = [
   {
@@ -29,8 +33,48 @@ const pillars = [
 ];
 
 export default function About() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const pillarsRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (typeof window === "undefined" || reducedMotion) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      const targets = [
+        contentRef.current,
+        pillarsRef.current,
+      ].filter(Boolean);
+
+      if (targets.length > 0 && sectionRef.current) {
+        gsap.fromTo(
+          targets,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
+
   return (
     <section
+      ref={sectionRef}
       id="about"
       aria-label="About Abdul Basit Chandio"
       className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
@@ -41,7 +85,10 @@ export default function About() {
         description="I am Abdul Basit Chandio—a full-stack developer and technical founder based at the intersection of product vision and engineering craft."
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
+      <div
+        ref={contentRef}
+        className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16"
+      >
         {/* Main narrative story */}
         <div className="lg:col-span-7 space-y-6 text-[var(--text-muted)] text-base sm:text-lg leading-relaxed">
           <p>
@@ -124,7 +171,10 @@ export default function About() {
       </div>
 
       {/* 3 Pillars Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div
+        ref={pillarsRef}
+        className="grid grid-cols-1 md:grid-cols-3 gap-6"
+      >
         {pillars.map((pillar) => (
           <GlassCard
             key={pillar.tag}

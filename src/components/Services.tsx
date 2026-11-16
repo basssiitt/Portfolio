@@ -1,8 +1,12 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import GlassCard from "./GlassCard";
 import SectionHeading from "./SectionHeading";
 import MagneticButton from "./MagneticButton";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 
 interface ServiceItem {
   number: string;
@@ -92,8 +96,44 @@ const servicesList: ServiceItem[] = [
 ];
 
 export default function Services() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (typeof window === "undefined" || reducedMotion) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      const validCards = cardsRef.current.filter(Boolean);
+
+      if (validCards.length > 0 && sectionRef.current) {
+        gsap.fromTo(
+          validCards,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
+
   return (
     <section
+      ref={sectionRef}
       id="services"
       aria-label="Client Services and Solutions"
       className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
@@ -106,85 +146,89 @@ export default function Services() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {servicesList.map((service, index) => {
-          // Make the first card or 5th card span 2 cols on lg if desired for asymmetric balance
           const isWide = index === 0 || index === 4;
           return (
-            <GlassCard
+            <div
               key={service.number}
-              glowColor={service.glow}
-              className={`p-7 sm:p-8 flex flex-col justify-between ${
-                isWide ? "md:col-span-2 lg:col-span-1" : ""
-              }`}
+              ref={(el) => {
+                cardsRef.current[index] = el;
+              }}
+              className={`flex flex-col ${isWide ? "md:col-span-2 lg:col-span-1" : ""}`}
             >
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span
-                    className={`font-mono text-xs tracking-widest uppercase font-semibold ${
-                      service.glow === "cyan"
-                        ? "text-[var(--cyan)]"
-                        : service.glow === "violet"
-                        ? "text-[var(--violet)]"
-                        : "text-[var(--amber)]"
-                    }`}
-                  >
-                    {"//"} SERVICE {service.number}
-                  </span>
-                  <span className="text-[11px] font-mono text-[var(--text-muted)] px-2 py-0.5 rounded bg-white/5 border border-white/5">
-                    {service.timeline}
-                  </span>
-                </div>
+              <GlassCard
+                glowColor={service.glow}
+                className="p-7 sm:p-8 flex-1 flex flex-col justify-between"
+              >
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span
+                      className={`font-mono text-xs tracking-widest uppercase font-semibold ${
+                        service.glow === "cyan"
+                          ? "text-[var(--cyan)]"
+                          : service.glow === "violet"
+                          ? "text-[var(--violet)]"
+                          : "text-[var(--amber)]"
+                      }`}
+                    >
+                      {"//"} SERVICE {service.number}
+                    </span>
+                    <span className="text-[11px] font-mono text-[var(--text-muted)] px-2 py-0.5 rounded bg-white/5 border border-white/5">
+                      {service.timeline}
+                    </span>
+                  </div>
 
-                <h3 className="font-heading text-xl sm:text-2xl font-bold text-white leading-snug">
-                  {service.title}
-                </h3>
+                  <h3 className="font-heading text-xl sm:text-2xl font-bold text-white leading-snug">
+                    {service.title}
+                  </h3>
 
-                <p className="text-sm text-[var(--text-muted)] leading-relaxed">
-                  {service.description}
-                </p>
+                  <p className="text-sm text-[var(--text-muted)] leading-relaxed">
+                    {service.description}
+                  </p>
 
-                {/* Deliverables list */}
-                <div className="pt-2">
-                  <h4 className="text-xs font-mono uppercase tracking-wider text-white/80 mb-2.5">
-                    Key Deliverables:
-                  </h4>
-                  <ul className="space-y-2">
-                    {service.deliverables.map((item) => (
-                      <li
-                        key={item}
-                        className="text-xs text-[var(--text-muted)] flex items-start gap-2"
-                      >
-                        <span
-                          className={`mt-0.5 text-xs font-bold ${
-                            service.glow === "cyan"
-                              ? "text-[var(--cyan)]"
-                              : service.glow === "violet"
-                              ? "text-[var(--violet)]"
-                              : "text-[var(--amber)]"
-                          }`}
+                  {/* Deliverables list */}
+                  <div className="pt-2">
+                    <h4 className="text-xs font-mono uppercase tracking-wider text-white/80 mb-2.5">
+                      Key Deliverables:
+                    </h4>
+                    <ul className="space-y-2">
+                      {service.deliverables.map((item) => (
+                        <li
+                          key={item}
+                          className="text-xs text-[var(--text-muted)] flex items-start gap-2"
                         >
-                          ✓
-                        </span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                          <span
+                            className={`mt-0.5 text-xs font-bold ${
+                              service.glow === "cyan"
+                                ? "text-[var(--cyan)]"
+                                : service.glow === "violet"
+                                ? "text-[var(--violet)]"
+                                : "text-[var(--amber)]"
+                            }`}
+                          >
+                            ✓
+                          </span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
 
-              <div className="pt-6 mt-6 border-t border-white/5 flex items-center justify-between">
-                <span className="text-xs text-[var(--text-muted)] font-mono">
-                  Fixed-scope or monthly retainer
-                </span>
-                <MagneticButton
-                  href="#contact"
-                  variant="ghost"
-                  className="!text-xs text-white hover:text-[var(--cyan)] font-mono"
-                  ariaLabel={`Inquire about ${service.title}`}
-                >
-                  Book Service →
-                </MagneticButton>
-              </div>
-            </GlassCard>
+                <div className="pt-6 mt-6 border-t border-white/5 flex items-center justify-between">
+                  <span className="text-xs text-[var(--text-muted)] font-mono">
+                    Fixed-scope or sprint
+                  </span>
+                  <MagneticButton
+                    href="#contact"
+                    variant="ghost"
+                    className="!text-xs text-white hover:text-[var(--cyan)] font-mono"
+                    ariaLabel={`Inquire about ${service.title}`}
+                  >
+                    Book Service →
+                  </MagneticButton>
+                </div>
+              </GlassCard>
+            </div>
           );
         })}
       </div>

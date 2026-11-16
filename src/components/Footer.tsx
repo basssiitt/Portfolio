@@ -6,8 +6,13 @@ import MagneticButton from "./MagneticButton";
 const socialLinks = [
   {
     name: "GitHub",
-    href: "https://github.com",
+    href: "https://github.com/basssiit",
     ariaLabel: "Abdul Basit Chandio on GitHub",
+  },
+  {
+    name: "WhatsApp",
+    href: "https://wa.me/923127803616",
+    ariaLabel: "Message Abdul Basit Chandio on WhatsApp",
   },
   {
     name: "LinkedIn",
@@ -21,7 +26,7 @@ const socialLinks = [
   },
   {
     name: "Email",
-    href: "mailto:contact@claslo.com",
+    href: "mailto:admin@claslo.com",
     ariaLabel: "Send email to Abdul Basit Chandio",
   },
 ];

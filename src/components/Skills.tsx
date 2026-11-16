@@ -1,8 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import GlassCard from "./GlassCard";
 import SectionHeading from "./SectionHeading";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 
 interface SkillCategory {
   id: string;
@@ -110,6 +113,41 @@ const skillCategories: SkillCategory[] = [
 
 export default function Skills() {
   const [activeTab, setActiveTab] = useState<string>("all");
+  const sectionRef = useRef<HTMLElement>(null);
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (typeof window === "undefined" || reducedMotion) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      const targets = [tabsRef.current, gridRef.current].filter(Boolean);
+
+      if (targets.length > 0 && sectionRef.current) {
+        gsap.fromTo(
+          targets,
+          { opacity: 0, y: 35 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
 
   const filteredCategories =
     activeTab === "all"
@@ -118,6 +156,7 @@ export default function Skills() {
 
   return (
     <section
+      ref={sectionRef}
       id="skills"
       aria-label="Technical Skills and Capabilities"
       className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
@@ -129,11 +168,14 @@ export default function Skills() {
       />
 
       {/* Filter Tabs */}
-      <div className="flex flex-wrap items-center gap-2 mb-10 pb-2 overflow-x-auto">
+      <div
+        ref={tabsRef}
+        className="flex flex-wrap items-center gap-2 mb-10 pb-2 overflow-x-auto"
+      >
         <button
           type="button"
           onClick={() => setActiveTab("all")}
-          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all ${
+          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
             activeTab === "all"
               ? "bg-white text-black font-semibold shadow-[0_0_15px_rgba(255,255,255,0.3)]"
               : "bg-[var(--glass)] text-[var(--text-muted)] hover:text-white border border-[var(--glass-border)]"
@@ -148,7 +190,7 @@ export default function Skills() {
             key={cat.id}
             type="button"
             onClick={() => setActiveTab(cat.id)}
-            className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all ${
+            className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
               activeTab === cat.id
                 ? cat.color === "cyan"
                   ? "bg-[var(--cyan)] text-black font-semibold shadow-[0_0_15px_rgba(0,229,255,0.4)]"
@@ -165,7 +207,10 @@ export default function Skills() {
       </div>
 
       {/* Categories Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div
+        ref={gridRef}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
         {filteredCategories.map((category) => (
           <GlassCard
             key={category.id}
