@@ -95,9 +95,7 @@ export default function SelectedWork() {
       const track = trackRef.current;
       if (!track || !sectionRef.current) return;
 
-      // Normalize scroll prevents Lenis from fighting GSAP's pin
-      ScrollTrigger.normalizeScroll(true);
-
+      // This is the exact pixel distance the cards need to move
       const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
 
       const tween = gsap.to(track, {
@@ -108,10 +106,10 @@ export default function SelectedWork() {
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top top",
-        end: () => `+=${track.scrollWidth}`, // Using scrollWidth guarantees enough space
+        end: () => `+=${getScrollAmount() * -1}`, // End EXACTLY when cards stop moving
         pin: true,
         animation: tween,
-        scrub: true, // INSTANT scroll, no lag
+        scrub: 1, // A tiny bit of smoothing feels premium
         invalidateOnRefresh: true,
         anticipatePin: 1,
         onUpdate: (self) => {
@@ -125,7 +123,7 @@ export default function SelectedWork() {
       });
     }, sectionRef);
 
-    // Force refresh after layout is painted
+    // Force refresh after layout is painted and fonts load
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 500);
@@ -133,7 +131,6 @@ export default function SelectedWork() {
     return () => {
       clearTimeout(timer);
       ctx.revert();
-      ScrollTrigger.normalizeScroll(false);
     };
   }, [reducedMotion]);
 
