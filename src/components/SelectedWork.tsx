@@ -93,19 +93,24 @@ export default function SelectedWork() {
       const section = sectionRef.current;
       if (!track || !section) return;
 
-      const getScrollDistance = () => track.scrollWidth - window.innerWidth;
-
       const anim = gsap.to(track, {
-        x: () => -getScrollDistance(),
+        x: () =>
+          -(trackRef.current
+            ? trackRef.current.scrollWidth - window.innerWidth
+            : 0),
         ease: "none",
         scrollTrigger: {
           trigger: section,
           pin: true,
+          pinSpacing: true,
           scrub: true,
           start: "top top",
-          end: () => `+=${getScrollDistance()}`,
+          end: () =>
+            "+=" +
+            (trackRef.current
+              ? trackRef.current.scrollWidth - window.innerWidth
+              : 0),
           invalidateOnRefresh: true,
-          anticipatePin: 1,
           onUpdate: (self) => {
             const totalCards = 9;
             const index = Math.min(
@@ -122,7 +127,21 @@ export default function SelectedWork() {
       };
     });
 
-    return () => mm.revert();
+    // Force ScrollTrigger refresh after DOM and fonts paint to prevent scroll trap
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 500);
+
+    if (typeof document !== "undefined" && document.fonts) {
+      document.fonts.ready.then(() => {
+        ScrollTrigger.refresh();
+      });
+    }
+
+    return () => {
+      clearTimeout(timer);
+      mm.revert();
+    };
   }, [reducedMotion]);
 
   const cardContainerClass =
@@ -133,7 +152,7 @@ export default function SelectedWork() {
       ref={sectionRef}
       id="work"
       aria-label="Selected Projects and Case Studies"
-      className="relative h-auto md:h-screen w-full flex flex-col justify-center overflow-visible md:overflow-hidden py-16 md:py-0"
+      className="relative h-auto md:h-screen w-full flex flex-col justify-center overflow-x-hidden overflow-y-visible py-16 md:py-0"
     >
       {/* Header bar cleanly integrated into pinned container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mb-6 shrink-0">
@@ -157,7 +176,7 @@ export default function SelectedWork() {
       </div>
 
       {/* Horizontal Scroll Track (Desktop) / Vertical Stack (Mobile) */}
-      <div className="w-full max-w-3xl md:max-w-none mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
+      <div className="w-full max-w-3xl md:max-w-none mx-auto px-4 sm:px-6 lg:px-8 flex items-center overflow-x-hidden overflow-y-visible">
         <div
           ref={trackRef}
           className="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch w-full md:w-max will-change-transform"
