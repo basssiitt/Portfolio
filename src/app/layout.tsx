@@ -20,26 +20,65 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Abdul Basit Chandio — Founder & CEO of Claslo | Full Stack Developer",
+  metadataBase: new URL("https://claslo.com"),
+  title: "Abdul Basit Chandio | Full Stack Developer & Founder",
   description:
-    "Portfolio of Abdul Basit Chandio — Founder & CEO of Claslo, Full Stack Developer. Building fast, accessible web apps and AI-powered digital products.",
+    "Full Stack Developer and Founder of Claslo. I build fast, accessible web apps, enterprise SaaS platforms, and AI integrations.",
   keywords: [
-    "Abdul Basit Chandio",
-    "Claslo",
     "Full Stack Developer",
-    "Software Engineer",
     "Next.js",
     "React",
-    "TypeScript",
-    "AI SaaS",
+    "AI",
+    "SaaS",
+    "Portfolio",
+    "Claslo",
+    "Pakistan",
   ],
-  authors: [{ name: "Abdul Basit Chandio" }],
+  authors: [{ name: "Abdul Basit Chandio", url: "https://claslo.com" }],
+  creator: "Abdul Basit Chandio",
+  publisher: "Abdul Basit Chandio",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
-    title: "Abdul Basit Chandio — Founder & CEO of Claslo | Full Stack Developer",
+    title: "Abdul Basit Chandio | Full Stack Developer & Founder",
     description:
-      "Building fast, accessible web apps and AI-powered digital products for ambitious clients.",
+      "Full Stack Developer and Founder of Claslo. I build fast, accessible web apps, enterprise SaaS platforms, and AI integrations.",
     type: "website",
     locale: "en_US",
+    url: "https://claslo.com",
+    siteName: "Abdul Basit Chandio",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Abdul Basit Chandio | Full Stack Developer & Founder",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Abdul Basit Chandio | Full Stack Developer & Founder",
+    description:
+      "Full Stack Developer and Founder of Claslo. I build fast, accessible web apps, enterprise SaaS platforms, and AI integrations.",
+    images: ["/og-image.png"],
+    creator: "@basssiitt",
+  },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: "/icon.svg",
   },
 };
 

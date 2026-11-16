@@ -23,7 +23,12 @@ function TiltCard({
   const reducedMotion = useReducedMotion();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (reducedMotion || !cardRef.current) return;
+    if (
+      reducedMotion ||
+      (typeof window !== "undefined" && window.innerWidth < 768) ||
+      !cardRef.current
+    )
+      return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -121,17 +126,17 @@ export default function SelectedWork() {
   }, [reducedMotion]);
 
   const cardContainerClass =
-    "w-[85vw] md:w-[55vw] lg:w-[45vw] xl:w-[42vw] max-w-[620px] h-[520px] max-h-[68vh] shrink-0 p-6 md:p-8 flex flex-col justify-between overflow-hidden bg-transparent";
+    "w-full md:w-[55vw] lg:w-[45vw] xl:w-[42vw] md:max-w-[620px] h-auto min-h-[480px] md:h-[520px] md:max-h-[68vh] md:shrink-0 p-5 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden bg-transparent";
 
   return (
     <section
       ref={sectionRef}
       id="work"
       aria-label="Selected Projects and Case Studies"
-      className="relative h-auto md:h-screen w-full flex flex-col justify-center overflow-hidden py-16 md:py-0"
+      className="relative h-auto md:h-screen w-full flex flex-col justify-center overflow-visible md:overflow-hidden py-16 md:py-0"
     >
       {/* Header bar cleanly integrated into pinned container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mb-4 md:mb-6 shrink-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mb-6 shrink-0">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-3">
           <SectionHeading
             eyebrow="03 // PROVEN RESULTS & ARCHITECTURE"
@@ -152,7 +157,7 @@ export default function SelectedWork() {
       </div>
 
       {/* Horizontal Scroll Track (Desktop) / Vertical Stack (Mobile) */}
-      <div className="w-full px-4 sm:px-6 lg:px-8 flex items-center">
+      <div className="w-full max-w-3xl md:max-w-none mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
         <div
           ref={trackRef}
           className="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch w-full md:w-max will-change-transform"
